@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline name="BLM-Daten für numismatik-bw.de">
+
+	<config name="xmlsource" label="Eingabedatei: " typ="file" /> 
+	
+	<pipe className="bsz.swbtrafo.pipes.XmlReaderPipe">
+		<parameter name="records" value="OBJECTS/OBJECT" />
+	</pipe>
+	
+	<pipe className="bsz.swbtrafo.pipes.XSLTPipe">
+		<parameter name="stylesheet" value="blm/imdas2blank.xsl" />
+	</pipe>
+	
+	<pipe className="bsz.swbtrafo.pipes.XPathPipe">
+		<parameter name="xpath.recid" value="records/record/imdasid" />
+		<parameter name="xpath.front" value="records/record/frontimage" />
+		<parameter name="xpath.back" value="records/record/backimage" />
+	</pipe>
+	
+	<pipe className="bsz.swbtrafo.pipes.XSLTPipe">
+		<parameter name="stylesheet" value="blm/blank2kenom.xsl" />
+	</pipe>	
+	
+	<pipe className="bsz.swbtrafo.pipes.KenomWriterPipe" >
+		<parameter name="filename" value="blm_kenom-export_lido.zip" />
+		<parameter name="imagepath" value="/mnt/musis/z/blm" />
+	</pipe>
+	
+	<!-- pipe className="bsz.swbtrafo.pipes.ConsolePipe">
+		<listener className="bsz.swbtrafo.listener.CountListener" />
+	</pipe -->
+		
+</pipeline>

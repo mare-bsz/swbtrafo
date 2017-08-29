@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<tomcat-users xmlns="http://tomcat.apache.org/xml"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+              version="1.0">
+
+  <role rolename="swbtrafo"/>
+  <user username="blm" password="blm" roles="swbtrafo"/>
+  <user username="rem" password="rem" roles="swbtrafo"/>
+  <user username="sgs" password="sgs" roles="swbtrafo"/>
+  <user username="bsz" password="bsz" roles="swbtrafo"/>
+  <user username="skk" password="skk" roles="swbtrafo"/>
+  <user username="sfg" password="sfg" roles="swbtrafo"/>
+  <user username="smf" password="smf" roles="swbtrafo"/>
+  <user username="lim" password="lim" roles="swbtrafo"/>
+  <user username="uafr" password="uafr" roles="swbtrafo"/>
+  <user username="dgs" password="dgs" roles="swbtrafo"/>
+  <user username="sak" password="sak" roles="swbtrafo"/>
+  <user username="khg" password="khg" roles="swbtrafo"/>
+  <user username="smnk" password="smnk" roles="swbtrafo"/>
+
+</tomcat-users>

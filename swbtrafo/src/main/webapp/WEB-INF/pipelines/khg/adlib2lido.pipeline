@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline>
+
+	<pipe className="bsz.swbtrafo.handlers.SplitHandler">
+		<parameter name="path" value="adlibXML/recordList/record" />
+	</pipe>	
+	
+	<pipe className="bsz.swbtrafo.handlers.XsltHandler">
+		<parameter name="stylesheet" value="/WEB-INF/xsl/lido/khg2blank.xsl" />
+		<parameter name="expandEntities" value="true" />
+	</pipe>
+	
+	<pipe className="bsz.swbtrafo.handlers.XsltHandler">
+		<parameter name="stylesheet" value="/WEB-INF/xsl/lido/khga2lido.xsl" />
+		<parameter name="expandEntities" value="true" />
+	</pipe>	
+    			
+	<pipe className="bsz.swbtrafo.handlers.JoinHandler" >
+		<parameter name="rootURI" value="http://www.lido-schema.org" />
+		<parameter name="rootLocalname" value="lidoWrap" />
+		<parameter name="rootQName" value="lido:lidoWrap" />
+		<parameter name="nsname" value="lido" />
+	</pipe>
+	
+	<pipe className="bsz.swbtrafo.handlers.SchemaValidationHandler">
+        <parameter name="schema" value="http://www.lido-schema.org/schema/v1.0/lido-v1.0.xsd" />
+    </pipe>
+	
+	<pipe className="bsz.swbtrafo.handlers.Save2FileHandler">
+		<parameter name="filename" value="C:/java/work/swbtrafo/swbtrafo/data/khg/lidoresult.xml" />
+	</pipe>
+	
+</pipeline>

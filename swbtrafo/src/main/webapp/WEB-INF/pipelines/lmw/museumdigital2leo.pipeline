@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline name="Trafo nach LEO für die LMW" description="Transformation von imdas pro Datensätzen nach LEO-XML">
+
+	<config name="xmlsource" label="Eingabedatei: imdas pro Exportdatei für LEO" typ="file" />
+
+	<pipe className="bsz.swbtrafo.pipes.leo.ZipXmlReaderPipe">
+	</pipe>
+		
+	<pipe className="bsz.swbtrafo.pipes.XSLTPipe">
+		<parameter name="stylesheet" value="lmw/museumdigital2leo.xsl" />
+	</pipe>
+	
+	<pipe className="bsz.swbtrafo.pipes.JoinPipe">
+		<parameter name="container" value="leobwMetaData@xmlns:xs=http://www.leo-bw.de/xsd/leobw-1.0.0,xmlns:xsi=http://www.w3.org/2001/XMLSchema-instance#dokumentListe" />
+	</pipe>
+				
+	<pipe className="bsz.swbtrafo.pipes.leo.LEOWriterPipe" >
+		<parameter name="filename" value="lmw_museumsobjekte_%d" />
+	</pipe>
+	
+	<!-- pipe className="bsz.swbtrafo.pipes.ConsolePipe">
+	</pipe -->
+
+</pipeline>

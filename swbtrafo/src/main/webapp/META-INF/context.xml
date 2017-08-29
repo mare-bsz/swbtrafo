@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context displayName="swbtrafo" path="/swbtrafo" allowCasualMultipartParsing="true">	
+	
+	<Parameter name="solrUrl" value="http://localhost:8983/solr/" />
+	
+	<Resource 
+		name="jdbc/swbdepot" 
+		auth="Container" 
+		driverClassName="com.mysql.jdbc.Driver" 
+		maxActive="20" 
+		maxIdle="10" 
+		maxWait="-1" 
+		password="swbdepot" 
+		type="javax.sql.DataSource" 
+		url="jdbc:mysql://localhost:3306/swbdepot"  
+		username="swbdepot"/>
+	
+	<Realm className="org.apache.catalina.realm.MemoryRealm"
+       pathname="wtpwebapps/swbtrafo/WEB-INF/users.xml"/>
+	
+</Context>

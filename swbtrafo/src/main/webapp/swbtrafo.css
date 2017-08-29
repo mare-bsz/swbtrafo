@@ -1,0 +1,31 @@
+@CHARSET "UTF-8";
+
+body {
+	width: 900px;
+	font-family: Verdana,Arial,sans-serif;
+	font-size: 9pt;
+}
+
+h1 {
+	color: blue;
+}
+
+.formfrm {
+	border: 1px solid black;
+	padding: 5px;
+	margin: 5px;
+}
+
+.leftfrm {
+	width: 600px;
+	float: left;
+}
+
+.rightfrm {
+	width: 600px;
+	float: right;
+}
+
+.clearfrm {
+	clear: both;
+}

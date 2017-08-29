@@ -1,0 +1,89 @@
+package bsz.swbtrafo.servlet;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
+
+import bsz.swbtrafo.TrafoConfig;
+import bsz.swbtrafo.TrafoException;
+import bsz.swbtrafo.TrafoPipeline;
+import bsz.swbtrafo.TrafoTicket;
+
+public class Run extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
+		try {
+								
+			final TrafoPipeline trafoPipeline = createPipeline(req);
+			
+			if (!trafoPipeline.getConfiguration().isEmpty()) {
+				req.getRequestDispatcher("/config.jsp").forward(req, resp);								
+			} else {
+				runPipeline(trafoPipeline);
+				req.getRequestDispatcher("/result.jsp").forward(req, resp);		
+			}			
+			
+		} catch (TrafoException e) {
+			resp.sendError(400, e.getMessage());
+		}
+	}	
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
+		try {
+						
+			final TrafoPipeline trafoPipeline = createPipeline(req);			
+			configPipeline(trafoPipeline, req);			
+			runPipeline(trafoPipeline);
+			
+			req.getRequestDispatcher("/result.jsp").forward(req, resp);	
+			
+		} catch (TrafoException e) {
+			resp.sendError(400, e.getMessage());
+		}
+	}
+	
+	private TrafoPipeline createPipeline(HttpServletRequest req) throws TrafoException {
+		final File pipelineFile = findPipelineFile(req.getParameter("trafo"), req.getRemoteUser());
+		final TrafoPipeline trafoPipeline = TrafoPipeline.createTrafoPipeline(pipelineFile, new ServletTrafoContext(req));
+		req.setAttribute("pipeline", trafoPipeline);
+		req.getSession().setAttribute("results", trafoPipeline.getResults());
+		return trafoPipeline;		
+	}
+	
+	private File findPipelineFile(final String pipelineName, final String remoteUser) throws TrafoException {
+		if (pipelineName != null && !pipelineName.isEmpty()) {
+			return new File(getServletContext().getRealPath("/WEB-INF/pipelines/" + remoteUser + "/" + pipelineName));			
+		} else {
+			throw new TrafoException("Pipeline-Name ist Null oder leer");
+		} 	
+	}
+
+	private void runPipeline(final TrafoPipeline trafoPipeline) throws TrafoException {
+		trafoPipeline.init();
+		trafoPipeline.process(new TrafoTicket());
+		trafoPipeline.finit();
+	}
+	
+	private void configPipeline(final TrafoPipeline trafoPipeline, final HttpServletRequest request) 
+		throws ServletException, IOException, TrafoException {
+		for (TrafoConfig config : trafoPipeline.getConfiguration()) {			
+			if ("text".equals(config.getTyp())) {				
+				config.setValue(IOUtils.toString(request.getPart(config.getName()).getInputStream(), "UTF-8"));				
+			} else if ("file".equals(config.getTyp())) {
+				config.setValue(request.getPart(config.getName()));
+			} else {
+				throw new TrafoException("Unbekannter Trafo-Config-Typ: " + config.getTyp());
+			}
+		}		
+	}
+}

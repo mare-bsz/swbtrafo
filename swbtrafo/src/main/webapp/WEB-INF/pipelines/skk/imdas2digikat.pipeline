@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline name="Trafo nach Digikat für die SKK" description="Transformation von imdas pro Datensätzen in einen Solr-Index">
+
+	<config name="xmlsource" label="Eingabedatei: imdas-pro-Exportdatei für den Digikat" typ="file" />
+	
+	<pipe className="bsz.swbtrafo.pipes.XmlReaderPipe">
+		<parameter name="records" value="OBJECTS/OBJECT" />
+	</pipe> 
+	
+	<pipe className="bsz.swbtrafo.pipes.XSLTPipe">
+		<parameter name="stylesheet" value="skk/imdas2digikat.xsl" />
+	</pipe>
+						
+	<pipe className="bsz.swbtrafo.pipes.SolrWriterPipe">
+		<parameter name="shadowCore" value="skkshadow" />	
+		<parameter name="liveCore" value="skklive" />	
+		<listener className="bsz.swbtrafo.listener.CountListener" />
+	</pipe>
+	
+	<!-- pipe className="bsz.swbtrafo.pipes.ConsolePipe" / -->
+
+</pipeline>

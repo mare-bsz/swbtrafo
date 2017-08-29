@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+	version="3.0">
+  <description>SWBtrafo</description>
+  
+   <listener>
+      <listener-class>bsz.swbtrafo.servlet.DataSourceListener</listener-class> 
+   </listener>
+   
+   <listener>
+      <listener-class>bsz.swbtrafo.servlet.SessionListener</listener-class> 
+   </listener>
+  
+  <servlet>
+  	<servlet-name>SWBtrafo Runner</servlet-name>
+  	<servlet-class>bsz.swbtrafo.servlet.Run</servlet-class>
+  	<multipart-config>
+	    <location>c:/java/temp</location>
+	    <max-file-size>312732300</max-file-size>
+	    <max-request-size>418018841</max-request-size>
+	    <file-size-threshold>1048576</file-size-threshold>
+	</multipart-config>
+  </servlet>
+  <servlet>
+  	<servlet-name>Result Delivery</servlet-name>
+  	<servlet-class>bsz.swbtrafo.servlet.Delivery</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>Result Delivery</servlet-name>
+  	<url-pattern>/deliver</url-pattern>
+  </servlet-mapping> 
+   
+  <servlet-mapping>
+  	<servlet-name>SWBtrafo Runner</servlet-name>
+  	<url-pattern>/run</url-pattern>  	
+  </servlet-mapping>
+   
+  <security-constraint>
+  	<display-name>SecurityConstraint</display-name>
+    <web-resource-collection>
+      <web-resource-name>swbtrafo-Kollektion</web-resource-name>
+      <url-pattern>/pipelines.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>swbtrafo</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+  
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+       <form-login-page>/login.jsp</form-login-page>
+       <form-error-page>/error.jsp</form-error-page>
+    </form-login-config>            
+  </login-config>
+  
+  <security-role>
+    <role-name>swbtrafo</role-name>
+  </security-role>  
+  
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+</web-app>

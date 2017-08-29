@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline 
+	name="Erzeugung von imdas-Ladefiles aus SWBdepot für das Lindenmuseum"
+	description="Zu einer Samlung (Aggregation) und einem Lieferdatum wird ein Ladefile mit LZA-Daten zum Import nach Imdas erzeugt.">
+	
+	<config name="aggregation" label="Sammlung zu der die Bilddaten gehören" typ="text" />
+	<config name="datum" label="Datum der Lieferung im format yyyyMMdd" typ="text" />
+	<config name="von" label="Erster Datensatz der Ausgabe" typ="text" />
+	<config name="bis" label="Letzter Datensatz der Ausgabe" typ="text" />
+	
+	<parameter name="supplier" value="lim"/>
+	<parameter name="mysql" value="jdbc:mysql://naxosdb:3306/swbdepot?user=swbdepot&amp;password=pw_swbdepot" />
+			
+	<pipe className="bsz.swbtrafo.pipes.lzaladefiles.CreateLadeFilePipe">
+		<parameter name="filename" value="lim_lzaladefile%d.txt" />
+	</pipe>
+
+</pipeline>
