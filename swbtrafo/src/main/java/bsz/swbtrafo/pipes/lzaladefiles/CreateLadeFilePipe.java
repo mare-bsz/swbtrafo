@@ -1,7 +1,6 @@
 package bsz.swbtrafo.pipes.lzaladefiles;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +14,6 @@ import javax.sql.DataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import bsz.swbtrafo.TrafoContext;
 import bsz.swbtrafo.TrafoException;
 import bsz.swbtrafo.TrafoTicket;
 import bsz.swbtrafo.pipes.DownloadPipe;
@@ -30,6 +28,7 @@ public class CreateLadeFilePipe extends DownloadPipe {
 	public void init() throws TrafoException {
 		
 		setMimetype("text/plain; charset=UTF-8");
+		setEncoding("UTF-8");
 		
 		if (getParameter("filename") != null) {
 			setFilename(getParameter("filename").replace("%d", getCurrentDate()));
@@ -44,7 +43,7 @@ public class CreateLadeFilePipe extends DownloadPipe {
 		
 		try {	
 			
-			final DataSource datasource = (DataSource) trafoPipeline.getTrafoContext().getAttribute(getParameter("datasource"));
+			final DataSource datasource = (DataSource) trafoPipeline.getTrafoContext().getAttribute("swbdepot");
 	    			
 			/* Eine Connection wird bereitgestellt. */				
 			try (Connection connection = datasource.getConnection()) {
@@ -81,10 +80,11 @@ public class CreateLadeFilePipe extends DownloadPipe {
 					+ "FROM supplier s, aggregation a, file f, objektbild o, derivat d "
 					+ "WHERE s.id = a.supplier AND a.id = f.aggregation AND o.version = 's' "
 					+ "AND d.file = f.id AND o.file = f.id AND s.kuerzel = ? "
-					+ "AND a.kuerzel = ? AND f.datum = ?");
+					+ "AND a.kuerzel = ? AND f.datum >= ? AND f.datum <= ?");
 				pstmt.setString(1,  getParameter("supplier"));
 				pstmt.setString(2, ticket.getString("aggregation"));
-				pstmt.setDate(3, new java.sql.Date(formatter.parse(ticket.getString("datum")).getTime()));
+				pstmt.setDate(3, new java.sql.Date(formatter.parse(ticket.getString("anfangsdatum")).getTime()));
+				pstmt.setDate(4, new java.sql.Date(formatter.parse(ticket.getString("enddatum")).getTime()));
 				ResultSet rs = pstmt.executeQuery();
 				int i = 1;
 				/* Die Ergebnisse werden ausgewertet und in den Servlet-OutputWriter geschrieben */

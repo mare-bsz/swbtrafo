@@ -23,7 +23,11 @@
 				</div>				
 				<div>
 					<c:forEach var="result" items="#{pipeline.results}" >
-						<p><a href="<c:url value='deliver?result=${result.name}' />"><c:out value="${result.name}" /></a></p>											
+						<c:url value="deliver" var="deliverUrl">
+							<c:param name="result" value="${result.name}" />
+							<c:param name="encoding" value="${result.encoding}" />
+						</c:url>
+						<p><a href="${deliverUrl}"><c:out value="${result.name}" /></a></p>											
 					</c:forEach>
 				</div>
 			</div>		

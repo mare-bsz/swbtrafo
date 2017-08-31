@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pipeline 
-	name="Erzeugung von imdas-Ladefiles aus SWBdepot für das Lindenmuseum"
-	description="Zu einer Samlung (Aggregation) und einem Lieferdatum wird ein Ladefile mit LZA-Daten zum Import nach Imdas erzeugt.">
+	name="Erzeugung von imdas-Ladefiles aus SWBdepot für das Linden-Museum"
+	description="Für Lieferungen von Bilddateien zwischen einem Anfangs- und einem Enddatum zu einer Sammlung (Kürzel) wird ein Ladefile mit LZA-Daten zum Import nach Imdas erzeugt. Die Angaben 'erster Datensatz' bzw. 'letzter Datensatz' bezeichnen dabei die Position im Ergebnis (nicht eine Inventarnummer etc.!) und ermöglichen die Ladefiles jeweils in Teilmengen zu generieren und abzuarbeiten.">
 	
-	<config name="aggregation" label="Sammlung zu der die Bilddaten gehören" typ="text" />
-	<config name="datum" label="Datum der Lieferung im format yyyyMMdd" typ="text" />
+	<config name="aggregation" label="Sammlung zu der die Bilddaten gehören (Kürzel)" typ="text" />
+	<config name="anfangsdatum" label="Anfangsdatum der Lieferungen im Format yyyyMMdd" typ="text" />
+	<config name="enddatum" label="Enddatum der Lieferungen im Format yyyyMMdd" typ="text" />
 	<config name="von" label="Erster Datensatz der Ausgabe" typ="text" />
 	<config name="bis" label="Letzter Datensatz der Ausgabe" typ="text" />
 	

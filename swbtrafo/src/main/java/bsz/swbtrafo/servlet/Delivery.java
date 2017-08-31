@@ -28,7 +28,7 @@ public class Delivery extends HttpServlet {
 					
 			Path temp = findTempFile(req.getParameter("result"), req.getRemoteUser());				
 			
-			setResponseHeaders(resp, temp);
+			setResponseHeaders(resp, temp, req.getParameter("encoding"));
 			
 			writeTempToReponse(resp, temp);
 			
@@ -39,11 +39,11 @@ public class Delivery extends HttpServlet {
 		}
 	}
 
-	private void setResponseHeaders(HttpServletResponse resp, Path temp) throws IOException {
+	private void setResponseHeaders(final HttpServletResponse resp, final Path temp, final String encoding) throws IOException {
 		resp.setContentType(Files.probeContentType(temp));
 		resp.setHeader("Content-Disposition", "attachment; filename=\"" + temp.getFileName() + "\"");	
 		resp.setContentLength(toIntExact(Files.size(temp)));
-		resp.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding(encoding);
 	}
 
 	private void writeTempToReponse(HttpServletResponse resp, Path temp) throws IOException, FileNotFoundException {

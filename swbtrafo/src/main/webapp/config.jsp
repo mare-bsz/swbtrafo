@@ -15,6 +15,7 @@
 		<h2>Konfiguration der Pipeline</h2>
 		<div style="clear: both">				
 			<p>Gewählte Pipeline: <c:out value="${pipeline.name}" /></p>
+			<p><c:out value="${pipeline.description}" /></p>
 			<c:url value="/run" var="action">
 				<c:param name="trafo" value="${param.trafo}" />
 			</c:url>					

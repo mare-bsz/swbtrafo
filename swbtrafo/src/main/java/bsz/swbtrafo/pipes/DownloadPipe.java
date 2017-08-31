@@ -1,7 +1,8 @@
 package bsz.swbtrafo.pipes;
 
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.file.Paths;
 import java.util.Calendar;
@@ -16,7 +17,10 @@ public class DownloadPipe  extends TrafoPipe {
 	protected Writer wrt;
 	
 	protected String mimetype;
-	protected void setMimetype(String mimetype) { this.mimetype = mimetype; }
+	protected void setMimetype(final String mimetype) { this.mimetype = mimetype; }
+	
+	protected String encoding = "UTF-8";
+	protected void setEncoding(final String encoding) { this.encoding = encoding; }
 		
 	protected String filename;
 	protected void setFilename(String filename) { this.filename = filename; }
@@ -27,10 +31,10 @@ public class DownloadPipe  extends TrafoPipe {
 		result.setName(filename);
 		result.setPath(Paths.get(trafoPipeline.getTempPath(filename)));
 		result.setMime(mimetype);
-		result.setEncoding("UTF-8");
+		result.setEncoding(encoding);
 		trafoPipeline.addResult(result);
 		try {
-			wrt = new FileWriter(trafoPipeline.getTempPath(filename));
+			wrt = new OutputStreamWriter(new FileOutputStream(trafoPipeline.getTempPath(filename)), encoding);
 		} catch (IOException e) {
 			throw new TrafoException(e);
 		}		
