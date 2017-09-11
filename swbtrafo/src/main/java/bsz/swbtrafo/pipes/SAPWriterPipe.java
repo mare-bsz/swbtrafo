@@ -163,6 +163,27 @@ public class SAPWriterPipe extends DownloadPipe {
 					}
 				}
 				return result.append(delimiter).toString();
+			} else if ("plain".equals(type)) {
+				StringBuilder result = new StringBuilder();
+				for (char c : value.toCharArray()) {
+					if (c == separator) {
+						result.append(" ");
+					} else {
+						switch (c) {
+						case '\'':
+							result.append(' ');
+							break;
+						case '\n':
+							result.append(' ');
+							break;
+						case '\r':
+							result.append(' ');
+						default:
+							result.append(c);
+						}
+					}
+				}
+				return result.toString();
 			} else {
 				return value.trim();
 			}

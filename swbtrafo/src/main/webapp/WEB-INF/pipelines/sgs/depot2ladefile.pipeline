@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pipeline 
-	name="Erzeugung von imdas-Ladefiles aus SWBdepot für das Linden-Museum"
+	name="Erzeugung von imdas-Ladefiles aus SWBdepot für die Staatsgalerie Stuttgart"
 	description="Für Lieferungen von Bilddateien zwischen einem Anfangs- und einem Enddatum zu einer Sammlung (Kürzel) wird ein Ladefile mit LZA-Daten zum Import nach Imdas erzeugt. Die Angaben 'erster Datensatz' bzw. 'letzter Datensatz' bezeichnen dabei die Position im Ergebnis (nicht eine Inventarnummer etc.!) und ermöglichen die Ladefiles jeweils in Teilmengen zu generieren und abzuarbeiten.">
 	
 	<config name="aggregation" label="Sammlung zu der die Bilddaten gehören (Kürzel)" typ="text" />
@@ -9,10 +9,10 @@
 	<config name="von" label="Erster Datensatz der Ausgabe" typ="text" />
 	<config name="bis" label="Letzter Datensatz der Ausgabe" typ="text" />
 	
-	<parameter name="supplier" value="lim"/>
+	<parameter name="supplier" value="sgs"/>
 			
 	<pipe className="bsz.swbtrafo.pipes.lzaladefiles.CreateLadeFilePipe">
-		<parameter name="filename" value="lim_lzaladefile%d.txt" />
+		<parameter name="filename" value="sgs_lzaladefile%d.txt" />
 	</pipe>
 
 </pipeline>

@@ -4,7 +4,7 @@
 	xmlns:java="http://xml.apache.org/xalan/java"
     exclude-result-prefixes="java">
 	
-	<xsl:import href="../conv2sap.xsl" />
+	<xsl:import href="../conv2sap.xsl" />  
 		
 	<!--
 		XSL zur Verarbeitung von XML-Exporten des Lindenmuseums Stuttgart

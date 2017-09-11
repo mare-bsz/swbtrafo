@@ -62,22 +62,22 @@
 						<xsl:otherwise>OK</xsl:otherwise>
 					</xsl:choose>
 				</xsl:attribute>
-				<field name="buchungskreis" type="string">
+				<field name="buchungskreis" type="plain">
 					<xsl:value-of select="$buchungskreis" />
 				</field>
-				<field name="anlagenklasse" type="string">
+				<field name="anlagenklasse" type="plain">
 					<xsl:value-of select="$anlagenklasse" />
 				</field>			
-				<field name="bezeichnung_1" type="string">
+				<field name="bezeichnung_1" type="plain">
 					<xsl:value-of select="substring($bezeichnung_1,1,50)" />
 				</field>
-				<field name="bezeichnung_2" type="string">
+				<field name="bezeichnung_2" type="plain">
 					<xsl:value-of select="substring($bezeichnung_2,1,50)" />
 				</field>
-				<field name="inventarnummer" type="string">
+				<field name="inventarnummer" type="plain">
 					<xsl:value-of select="$inventarnummer" />
 				</field>	
-				<field name="imdas-nummer" type="string">
+				<field name="imdas-nummer" type="plain">
 					<xsl:value-of select="$imdas-nummer" />
 				</field>
 				<field name="aktivierungsdatum" type="date">
@@ -95,16 +95,16 @@
 				<field name="kostenstelle" type="number">
 					<xsl:value-of select="$kostenstelle" />
 				</field>
-				<field name="ordnungsbegriff 5" type="string">
+				<field name="ordnungsbegriff 5" type="plain">
 					<xsl:value-of select="$ordnungsbegriff" />
 				</field>
-				<field name="eigentumskennzeichen" type="string">
+				<field name="eigentumskennzeichen" type="plain">
 					<xsl:value-of select="$eigentumskennzeichen" />
 				</field>
 				<field name="menge" type="number">
 					<xsl:value-of select="$menge" />
 				</field>
-				<field name="bewertungsbereich" type="string">
+				<field name="bewertungsbereich" type="plain">
 					<xsl:value-of select="$bewertungsbereich" />
 				</field>
 				<field name="kummulierte_ahk" type="number">
