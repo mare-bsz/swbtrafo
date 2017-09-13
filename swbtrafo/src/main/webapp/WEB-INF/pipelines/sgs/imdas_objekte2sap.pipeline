@@ -8,7 +8,7 @@
 	</pipe>
 		
 	<pipe className="bsz.swbtrafo.pipes.XSLTPipe">
-		<parameter name="stylesheet" value="sgs/imdas2sap.xsl" />
+		<parameter name="stylesheet" value="sgs/imdas_objekte2sap.xsl" />
 	</pipe>
 				
 	<pipe className="bsz.swbtrafo.pipes.SAPWriterPipe" >

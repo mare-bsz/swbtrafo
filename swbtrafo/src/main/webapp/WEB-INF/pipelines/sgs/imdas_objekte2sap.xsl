@@ -111,6 +111,7 @@
 						<xsl:when test="./field[@id='Eingangsart'] = 'Erwerbung Staatsgalerie und Galerieverein'"><xsl:text>7950000000</xsl:text></xsl:when>
 						<xsl:when test="./field[@id='Eingangsart'] = 'Unbekannt'"><xsl:text>7950000000</xsl:text></xsl:when>
 						<xsl:when test="./field[@id='Eingangsart'] = 'Vermächtnis'"><xsl:text>7950020000</xsl:text></xsl:when>
+						<xsl:when test="./field[@id='Eingangsart'] = 'Kunsterwerb Allgemein'"><xsl:text>7950000000</xsl:text></xsl:when>
 						<!--  xsl:when test="./field[@id='Eingangsart'] = ''"><xsl:text>7950000000</xsl:text></xsl:when -->				
 						<xsl:otherwise></xsl:otherwise>												
 					</xsl:choose>
