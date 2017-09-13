@@ -10,7 +10,7 @@
 	</pipe>
 	
 	<pipe className="bsz.swbtrafo.pipes.XSLTPipe">
-		<parameter name="stylesheet" value="/blm/imdas2sap.xsl" />		
+		<parameter name="stylesheet" value="/blm/imdas_objekte2sap.xsl" />		
 	</pipe>
 			
 	<pipe className="bsz.swbtrafo.pipes.SAPWriterPipe" >
