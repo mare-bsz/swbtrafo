@@ -117,8 +117,8 @@
 	<xsl:template name="normDate">
 		<xsl:param name="datum"/>
 		<xsl:if test="string-length($datum) != 0"> 
-			<xsl:value-of select="java:bsz.swbtrafo.util.XsltUtil.normalizeDate($datum)" />
-			<!--  xsl:text>01.01.1900</xsl:text -->
+			<!-- <xsl:value-of select="java:bsz.swbtrafo.util.XsltUtil.normalizeDate($datum)" /> -->
+			<xsl:text>01.01.1900</xsl:text>
 		</xsl:if>
 		<xsl:if test="string-length($datum) = 0">
 			<xsl:text>01.01.1900</xsl:text> 

@@ -4,10 +4,10 @@
 	description="Für Lieferungen von Bilddateien zwischen einem Anfangs- und einem Enddatum zu einer Sammlung (Kürzel) wird ein Ladefile mit LZA-Daten zum Import nach Imdas erzeugt. Die Angaben 'erster Datensatz' bzw. 'letzter Datensatz' bezeichnen dabei die Position im Ergebnis (nicht eine Inventarnummer etc.!) und ermöglichen die Ladefiles jeweils in Teilmengen zu generieren und abzuarbeiten.">
 	
 	<config name="aggregation" label="Sammlung zu der die Bilddaten gehören (Kürzel)" typ="text" />
-	<config name="anfangsdatum" label="Anfangsdatum der Lieferungen im Format yyyyMMdd" typ="text" />
-	<config name="enddatum" label="Enddatum der Lieferungen im Format yyyyMMdd" typ="text" />
-	<config name="von" label="Erster Datensatz der Ausgabe" typ="text" />
-	<config name="bis" label="Letzter Datensatz der Ausgabe" typ="text" />
+	<config name="anfangsdatum" label="Anfangsdatum der Lieferungen" typ="datum" />
+	<config name="enddatum" label="Enddatum der Lieferungen" typ="datum" />
+	<config name="von" label="Erster Datensatz der Ausgabe" typ="zahl" />
+	<config name="bis" label="Letzter Datensatz der Ausgabe" typ="zahl" />
 	
 	<parameter name="supplier" value="lim"/>
 			

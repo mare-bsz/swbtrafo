@@ -2,6 +2,8 @@ package bsz.swbtrafo.servlet;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +20,8 @@ import bsz.swbtrafo.TrafoTicket;
 public class Run extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
+	final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
@@ -81,6 +85,10 @@ public class Run extends HttpServlet {
 				config.setValue(IOUtils.toString(request.getPart(config.getName()).getInputStream(), "UTF-8"));				
 			} else if ("file".equals(config.getTyp())) {
 				config.setValue(request.getPart(config.getName()));
+			} else if ("datum".equals(config.getTyp())) {							
+				config.setValue(request.getParameter(config.getName()));				
+			} else if ("zahl".equals(config.getTyp())) {
+				config.setValue(request.getParameter(config.getName()));
 			} else {
 				throw new TrafoException("Unbekannter Trafo-Config-Typ: " + config.getTyp());
 			}

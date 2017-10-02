@@ -18,6 +18,13 @@
 	<pipe className="bsz.swbtrafo.pipes.leo.LEOWriterPipe" >
 		<parameter name="filename" value="sgs_museumsobjekte_%d" />
 	</pipe>
+
+	<pipe className="bsz.swbtrafo.pipes.MailPipe">
+		<parameter name="address" value="christof.mainberger@bsz-bw.de" />
+		<parameter name="subject" value="SGS: Leo-Pipeline" />
+		<parameter name="message" value="Mit dem accout sgs wurde die imdas2leo-pipeline ausgelöst" />
+	</pipe>
+
 	
 	<!-- pipe className="bsz.swbtrafo.pipes.ConsolePipe">
 	</pipe -->

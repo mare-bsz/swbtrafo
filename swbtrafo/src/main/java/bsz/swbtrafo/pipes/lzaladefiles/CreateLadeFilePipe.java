@@ -1,10 +1,12 @@
 package bsz.swbtrafo.pipes.lzaladefiles;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,7 +23,7 @@ import bsz.swbtrafo.pipes.DownloadPipe;
 public class CreateLadeFilePipe extends DownloadPipe {
 	
 	private final Logger log = LogManager.getLogger(CreateLadeFilePipe.class);
-	private final DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+	private final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	private final Pattern aufnahmedatum = Pattern.compile("^(\\d{4})-(\\d{2})-(\\d{2})T.*$");	
 	
 	@Override
@@ -67,8 +69,8 @@ public class CreateLadeFilePipe extends DownloadPipe {
 				wrt.write("URL für Submaster\t");
 				wrt.write("URL für Derivat r\t");
 				wrt.write("UUID für Submaster (LZA)\t");
-				wrt.write("IMDAS-Importdatum (LZA)\n");				
-				
+				wrt.write("IMDAS-Importdatum (LZA)\n");		
+								
 				/* Das SQL-Statement zur Auswertung der Datenbank wird erzeugt */
 				PreparedStatement pstmt = connection.prepareStatement(
 					"SELECT f.uuid AS uuid, "
@@ -80,11 +82,11 @@ public class CreateLadeFilePipe extends DownloadPipe {
 					+ "FROM supplier s, aggregation a, file f, objektbild o, derivat d "
 					+ "WHERE s.id = a.supplier AND a.id = f.aggregation AND o.version = 's' "
 					+ "AND d.file = f.id AND o.file = f.id AND s.kuerzel = ? "
-					+ "AND a.kuerzel = ? AND f.datum >= ? AND f.datum <= ?");
+					+ "AND a.kuerzel = ? AND f.lieferdatum >= ? AND f.lieferdatum <= ?");
 				pstmt.setString(1,  getParameter("supplier"));
 				pstmt.setString(2, ticket.getString("aggregation"));
-				pstmt.setDate(3, new java.sql.Date(formatter.parse(ticket.getString("anfangsdatum")).getTime()));
-				pstmt.setDate(4, new java.sql.Date(formatter.parse(ticket.getString("enddatum")).getTime()));
+				pstmt.setDate(3, toSQLDate(ticket.getString("anfangsdatum")));
+				pstmt.setDate(4, toSQLDate(ticket.getString("enddatum")));
 				ResultSet rs = pstmt.executeQuery();
 				int i = 1;
 				/* Die Ergebnisse werden ausgewertet und in den Servlet-OutputWriter geschrieben */
@@ -119,6 +121,10 @@ public class CreateLadeFilePipe extends DownloadPipe {
 		} catch (Exception e) {
 			log.error("Fehler: " + e.getMessage());
 		}
+	}
+
+	private Date toSQLDate(String datumAsString) throws ParseException {
+		return new java.sql.Date(formatter.parse(datumAsString).getTime());
 	}
 
 	private String prepareAufnahmedatum(String src) {

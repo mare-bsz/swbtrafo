@@ -3,6 +3,8 @@
 	
 	<Parameter name="solrUrl" value="http://localhost:8983/solr/" />
 	
+	<Parameter name="mail.smtp.host" value="test" />
+	
 	<Resource 
 		name="jdbc/swbdepot" 
 		auth="Container" 
@@ -17,5 +19,8 @@
 	
 	<Realm className="org.apache.catalina.realm.MemoryRealm"
        pathname="wtpwebapps/swbtrafo/WEB-INF/users.xml"/>
+       
+     
+     
 	
 </Context>

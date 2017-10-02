@@ -160,6 +160,10 @@ public class TrafoPipeline extends TrafoPipe {
 				if ("text".equals(attributes.getValue("typ"))) {
 					config = new TrafoConfig("text");
 					config.setValue(attributes.getValue("default"));
+				} else if ("datum".equals(attributes.getValue("typ"))) {
+					config = new TrafoConfig("datum");
+				} else if ("zahl".equals(attributes.getValue("typ"))) {
+					config = new TrafoConfig("zahl");
 				} else if ("file".equals(attributes.getValue("typ"))) {
 					config = new TrafoConfig("file");
 				} else {

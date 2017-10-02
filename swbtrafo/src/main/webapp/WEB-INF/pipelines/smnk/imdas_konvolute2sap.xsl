@@ -9,7 +9,7 @@
 	<!--
 		XSL zur Verarbeitung von XML-Exporten des Staatlichen Naturkundemuseum Karlsruhe
 		
-		@version: 1
+		@version: 1 
 		@created: 2014-09-01
 		@author: Christof Mainberger, christof.mainberger@bsz-bw.de
 		

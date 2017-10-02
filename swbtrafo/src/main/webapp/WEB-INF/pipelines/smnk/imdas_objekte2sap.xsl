@@ -6,7 +6,7 @@
 	
 	<xsl:import href="../conv2sap.xsl" />
 		
-	<!--
+	<!-- 
 		XSL zur Verarbeitung von XML-Exporten der Staatsgalerie Stuttgart
 		
 		@version: 1
