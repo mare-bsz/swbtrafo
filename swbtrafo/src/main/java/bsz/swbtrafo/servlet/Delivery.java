@@ -30,9 +30,7 @@ public class Delivery extends HttpServlet {
 			
 			setResponseHeaders(resp, temp, req.getParameter("encoding"));
 			
-			writeTempToReponse(resp, temp);
-			
-			Files.deleteIfExists(temp);
+			writeTempToReponse(resp, temp);			
 			
 		} catch (TrafoException e) {
 			resp.sendError(400, e.getMessage());		

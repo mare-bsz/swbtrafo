@@ -13,6 +13,7 @@
 			<div>eingeloggt: ${pageContext.request.remoteUser}&nbsp;<a href="<c:url value='/logout' />">logout</a></div>
 			<img src="logo.jpg" style="float: left; margin: 0 50px 30px 0;" />
 			<h1>SWBtrafo - Datenverarbeitung im Web</h1>
+			<p><a href="<c:url value='/pipelines.jsp' />">Zur Pipelineauswahl</a></p>
 			<h2>Ergebnisse</h2>
 			<div>				
 				<p style="clear: both">Gewählte Pipeline: <c:out value="${pipeline.name}" /></p>			
@@ -30,7 +31,7 @@
 						<p><a href="${deliverUrl}"><c:out value="${result.name}" /></a></p>											
 					</c:forEach>
 				</div>
-			</div>		
+			</div>					
 		</div>	
 	</body>
 </html>

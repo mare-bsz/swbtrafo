@@ -39,8 +39,8 @@ public class Run extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
-		try {
-						
+		try {						
+			
 			final TrafoPipeline trafoPipeline = createPipeline(req);			
 			configPipeline(trafoPipeline, req);			
 			runPipeline(trafoPipeline);
