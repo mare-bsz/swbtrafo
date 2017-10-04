@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -37,9 +35,8 @@ import org.xml.sax.helpers.XMLReaderFactory;
  *  
  * @author christof mainberger (christof.mainberger@bsz-bw.de)
  */
-public class TrafoPipeline extends TrafoPipe {
+public class TrafoPipeline extends TrafoPipe {	
 	
-	final Logger log = LogManager.getLogger(TrafoPipeline.class);
 		
 	public static TrafoPipeline createTrafoPipeline(final File pipelineFile, final TrafoContext trafoContext) 
 		throws TrafoException {
@@ -100,7 +97,7 @@ public class TrafoPipeline extends TrafoPipe {
 			xmlReader.setContentHandler(pipelineHandler);
 			xmlReader.parse(new InputSource(pipelineDefinition));
 		} catch (Exception e) {
-			log.error(e);
+			System.out.println(e.getMessage());
 		} 	
 	}
 	

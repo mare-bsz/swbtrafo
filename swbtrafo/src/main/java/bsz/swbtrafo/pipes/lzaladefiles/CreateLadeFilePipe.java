@@ -13,16 +13,12 @@ import java.util.regex.Pattern;
 
 import javax.sql.DataSource;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import bsz.swbtrafo.TrafoException;
 import bsz.swbtrafo.TrafoTicket;
 import bsz.swbtrafo.pipes.DownloadPipe;
 
 public class CreateLadeFilePipe extends DownloadPipe {
 	
-	private final Logger log = LogManager.getLogger(CreateLadeFilePipe.class);
 	private final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	private final Pattern aufnahmedatum = Pattern.compile("^(\\d{4})-(\\d{2})-(\\d{2})T.*$");	
 	
@@ -116,10 +112,10 @@ public class CreateLadeFilePipe extends DownloadPipe {
 				wrt.flush();
 				wrt.close();
 			} catch (SQLException e) {
-				log.error("SQL-Fehler: " + e);
+				System.out.println("SQL-Fehler: " + e);
 			} 
 		} catch (Exception e) {
-			log.error("Fehler: " + e.getMessage());
+			System.out.println("Fehler: " + e.getMessage());
 		}
 	}
 

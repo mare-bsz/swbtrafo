@@ -3,7 +3,7 @@
 	
 	<Parameter name="solrUrl" value="http://localhost:8983/solr/" />
 	
-	<Parameter name="mail.smtp.host" value="test" />
+	<Parameter name="mail.smtp.host" value="hermes.bsz-bw.de" />
 	
 	<Resource 
 		name="jdbc/swbdepot" 

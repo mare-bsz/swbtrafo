@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline 
+	name="Datenaufbereitung für SAP der SKK "
+	description="Die Daten werden aus imdas-pro-XML-Exporten erzeugt und in SAP-CSV konvertiert">
+	
+	<config name="xmlsource" label="Eingabedatei: imdas-pro-XML-Export" typ="file" />
+
+	<pipe className="bsz.swbtrafo.pipes.XmlReaderPipe">
+		<parameter name="records" value="imdasData/object/row" />
+	</pipe>	
+	
+	<pipe className="bsz.swbtrafo.pipes.XSLTPipe">
+		<parameter name="stylesheet" value="skk/imdas_objekte2sap.xsl" />
+	</pipe>
+			
+	<pipe className="bsz.swbtrafo.pipes.SAPWriterPipe" >
+		<parameter name="separator" value=";" />
+		<parameter name="headerline" value="true" />
+		<parameter name="filename" value="skk_sap-import_m_%d.csv" />
+	</pipe>
+
+</pipeline>

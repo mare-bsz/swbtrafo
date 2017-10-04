@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline 
+	name="Datenaufbereitung zum Importieren von Bildverknüpfungen nach Imdas Pro"
+	description="In einem Verzeichnis bereitgestellte Bilder werden in die Verzeichnisstruktur verschoben und ein entsprechendes Ladefile für Imdas wird erzeugt.">
+	
+	<config name="fotograf" label="Fotografin" typ="text" />
+	<config name="aufnahmedat" label="Aufnahmedatum" typ="text" />
+	
+	<parameter name="medientyp" value="Bild" />
+	<parameter name="sammlung" value="" />
+	<parameter name="eingnr" value="" />
+	<parameter name="status" value="Mat. zum Objekt" />	
+	<parameter name="rechte" value="Staatliche Kunsthalle Karlsruhe" />	
+	<parameter name="atelier" value="Staatliche Kunsthalle Karlsruhe" />
+	<parameter name="aufnahmeort" value="Staatliche Kunsthalle Karlsruhe" />
+	<parameter name="aufloesung" value="150 dpi" />
+	<parameter name="technikbeschreibung" value="digital" />
+	<parameter name="rechte" value="Staatliche Kunsthalle Karlsruhe" />
+	
+	<pipe className="bsz.swbtrafo.pipes.bildimport.TempImgDirReaderPipe">
+		<parameter name="tempImgDir" value="/mnt/musis/z/skk/Bilder_Import" />
+	</pipe>
+	
+	<pipe className="bsz.swbtrafo.pipes.bildimport.AnalyseFilenamePipe" />	
+	
+	<pipe className="bsz.swbtrafo.pipes.bildimport.FindExpoRecordPipeSolr">
+		<parameter name="solrCore" value="http://solrprobe.bsz-bw.de:8180/solr/exposkk1" />
+	</pipe>
+
+	<!-- pipe className="bsz.swbtrafo.pipes.ConsolePipe" / -->
+	
+	<!-- pipe className="bsz.swbtrafo.pipes.bildimport.MoveImages">	
+		<parameter name="targetDir" value="/mnt/musis/z/skk/Bilder" />
+	</pipe -->	
+			
+	<!-- pipe className="bsz.swbtrafo.pipes.bildimport.ImdasImportWriterPipe" >
+		<parameter name="separator" value=";" />
+		<parameter name="headerline" value="true" />
+		<parameter name="filename" value="skk_bildimport_%d.csv" />
+		<parameter name="pathprefix" value="/mnt/musis/z/skk/" />
+	</pipe -->
+
+	<pipe className="bsz.swbtrafo.pipes.MailPipe">
+		<parameter name="from" value="swbtrafo@bsz-bw.de" />
+		<parameter name="to" value="christof.mainberger@bsz-bw.de" />
+		<parameter name="subject" value="SKK: Bildimport Test-Pipeline" />
+		<parameter name="message" value="Mit dem accout skk wurde die Bildimport Test-pipeline ausgeloest" />
+	</pipe>
+
+
+</pipeline>
