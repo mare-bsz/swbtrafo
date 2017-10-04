@@ -40,7 +40,7 @@ public class FindExpoRecordPipe extends TrafoPipe {
 				        ticket.put("sammlung", record.get("sammlung"));
 				        super.process(ticket);
 			        } else {
-			        	getTrafoPipeline().addMessage("Der Datensatz zu " + ticket.getString("invnr") + " konnte nicht identifiziert werden.");
+			        	getTrafoPipeline().addMessage(ticket.getString("invnr"), "Der Datensatz zu " + ticket.getString("invnr") + " konnte nicht identifiziert werden.");
 			        }
 			    } 
 			} finally {

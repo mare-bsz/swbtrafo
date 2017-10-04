@@ -61,11 +61,11 @@ public class TrafoPipeline extends TrafoPipe {
 
 	private Map<String, Object> attributes = new HashMap<>();
 	public Object getAttribute(final String key) { return attributes.get(key); }
-	public void setAttribute(final String key, Object object) { this.attributes.put(key, object); }
+	public void setAttribute(final String key, Object object) { this.attributes.put(key, object); }		
 		
-	final private List<String> messages = new ArrayList<>();
-	public List<String> getMessages() { return messages; }
-	public void addMessage(final String message) { messages.add(message); }	
+	final private Map<String, String> messages = new HashMap<>();
+	public Map<String, String> getMessages() { return messages; }
+	public void addMessage(final String key, final String value) { messages.put(key,  value); }	
 	
 	final private List<TrafoResult> results = new ArrayList<>();
 	public List<TrafoResult> getResults() { return results; }

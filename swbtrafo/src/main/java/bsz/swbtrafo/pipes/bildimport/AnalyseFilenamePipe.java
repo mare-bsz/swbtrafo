@@ -21,7 +21,7 @@ public class AnalyseFilenamePipe extends TrafoPipe {
 			ticket.put("invnr", m.group(2));
 			super.process(ticket);
 		} else {
-			getTrafoPipeline().addMessage(bildDateiName + " wird nicht analysiert");
+			getTrafoPipeline().addMessage(bildDateiName, bildDateiName + " wird nicht analysiert");
 		}
 	}
 	

@@ -2,6 +2,7 @@ package bsz.swbtrafo.pipes;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Map.Entry;
 
 import bsz.swbtrafo.TrafoException;
 import bsz.swbtrafo.TrafoPipe;
@@ -53,8 +54,8 @@ public class ConsolePipe extends TrafoPipe {
 	
 	@Override
 	public void finit() throws TrafoException {		
-		for (String msg : trafoPipeline.getMessages()) {
-			out.println(msg);
+		for (Entry<String, String> msg : trafoPipeline.getMessages().entrySet()) {
+			out.println(msg.getKey() + ": " + msg.getValue());
 		}
 		out.close();
 		super.finit();

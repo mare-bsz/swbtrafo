@@ -44,10 +44,10 @@ public class FindExpoRecordPipeSolr extends TrafoPipe {
 			        ticket.put("sammlung", doc.query("//kollektion/sammlung").get(0).getValue());
 			        super.process(ticket);
 				} else {
-					getTrafoPipeline().addMessage("Der Datensatz zu " + ticket.getString("invnr") + " konnte nicht identifiziert werden.");
+					getTrafoPipeline().addMessage(ticket.getString("invnr"),"Der Datensatz zu " + ticket.getString("invnr") + " konnte nicht identifiziert werden.");
 				}
 			} catch (SolrServerException e) {
-				getTrafoPipeline().addMessage("Der Datensatz zu " + ticket.getString("invnr") + " konnte nicht identifiziert werden.");
+				getTrafoPipeline().addMessage(ticket.getString("invnr"),"Der Datensatz zu " + ticket.getString("invnr") + " konnte nicht identifiziert werden.");
 			} 
 			
 			
@@ -286,9 +286,9 @@ public class FindExpoRecordPipeSolr extends TrafoPipe {
 //			if (ticket.getString("sammlung") != null) {
 //				System.out.println(inv + ": " + ticket.getString("sammlung"));
 //			}
-			for (String msg : tp.getMessages()) {
-				System.out.println(msg);
-			}
+//			for (String msg : tp.getMessages()) {
+//				System.out.println(msg);
+//			}
 		}
 		
 	}

@@ -43,8 +43,8 @@
 	<pipe className="bsz.swbtrafo.pipes.MailPipe">
 		<parameter name="from" value="swbtrafo@bsz-bw.de" />
 		<parameter name="to" value="christof.mainberger@bsz-bw.de" />
-		<parameter name="subject" value="SKK: Bildimport Test-Pipeline" />
-		<parameter name="message" value="Mit dem accout skk wurde die Bildimport Test-pipeline ausgeloest" />
+		<parameter name="subject" value="Test - TEst - TEst - SKK: Bildimport Test-Pipeline" />
+		<parameter name="message" value="Mit dem accout skk wurde die Bildimport Test-pipeline ausgeloest " />
 	</pipe>
 
 
