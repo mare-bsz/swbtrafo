@@ -54,8 +54,8 @@ public class ConsolePipe extends TrafoPipe {
 	
 	@Override
 	public void finit() throws TrafoException {		
-		for (Entry<String, String> msg : trafoPipeline.getMessages().entrySet()) {
-			out.println(msg.getKey() + ": " + msg.getValue());
+		for (String msg : trafoPipeline.getMessages()) {
+			out.println(msg);
 		}
 		out.close();
 		super.finit();

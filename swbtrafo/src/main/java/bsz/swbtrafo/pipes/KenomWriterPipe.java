@@ -94,7 +94,7 @@ public class KenomWriterPipe extends TrafoPipe {
 					writeToZip(image);						
 					out.closeEntry();
 				} catch (Exception e) {
-					trafoPipeline.addMessage("Exception:", getParameter("imagepath") + pfad.replace('\\', '/') + " verursacht einen Fehler");
+					trafoPipeline.addMessage(getParameter("imagepath") + pfad.replace('\\', '/') + " verursacht einen Fehler");
 				}
 			}
 		}

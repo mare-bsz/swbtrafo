@@ -21,7 +21,7 @@
 
 	<pipe className="bsz.swbtrafo.pipes.MailPipe">
 		<parameter name="to" value="christof.mainberger@bsz-bw.de" />
-		<parameter name="from" value="swbtrafo@bsz-bw.de" />
+		<parameter name="from" value="jens.lill@bsz-bw.de" />
 		<parameter name="subject" value="SGS: Leo-Pipeline" />
 		<parameter name="message" value="Mit dem accout sgs wurde die imdas2leo-pipeline ausgelöst und in ${dateiname} geschrieben" />
 	</pipe>

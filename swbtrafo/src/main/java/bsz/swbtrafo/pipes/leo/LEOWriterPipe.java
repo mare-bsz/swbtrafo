@@ -25,6 +25,8 @@ public class LEOWriterPipe extends TrafoPipe {
 	public void init() throws TrafoException {
 		
 		final String filename = determineFilename();
+		
+		trafoPipeline.addParameter("dateiname", filename + ".zip");
 			
 		final TrafoResult result = new TrafoResult();
 		result.setName(filename  + ".zip");
@@ -60,7 +62,7 @@ public class LEOWriterPipe extends TrafoPipe {
 		try {
 			out.closeEntry();
 			out.flush();
-			out.close();
+			out.close();			
 		} catch (IOException e) {
 			throw new TrafoException(e);
 		}

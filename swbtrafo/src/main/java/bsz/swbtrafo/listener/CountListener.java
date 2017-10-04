@@ -21,7 +21,7 @@ public class CountListener extends TrafoListener {
 	
 	@Override
 	protected void finit() {
-		trafoPipe.getTrafoPipeline().addMessage("reccount", String.valueOf(count));
+		trafoPipe.getTrafoPipeline().addParameter("reccount", String.valueOf(count));
 	}
 
 }

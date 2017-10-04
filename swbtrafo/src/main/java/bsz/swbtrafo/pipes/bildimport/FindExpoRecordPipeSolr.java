@@ -44,10 +44,10 @@ public class FindExpoRecordPipeSolr extends TrafoPipe {
 			        ticket.put("sammlung", doc.query("//kollektion/sammlung").get(0).getValue());
 			        super.process(ticket);
 				} else {
-					getTrafoPipeline().addMessage(ticket.getString("invnr"),"Der Datensatz zu " + ticket.getString("invnr") + " konnte nicht identifiziert werden.");
+					getTrafoPipeline().addMessage("Der Datensatz zu " + ticket.getString("invnr") + " konnte nicht identifiziert werden.");
 				}
 			} catch (SolrServerException e) {
-				getTrafoPipeline().addMessage(ticket.getString("invnr"),"Der Datensatz zu " + ticket.getString("invnr") + " konnte nicht identifiziert werden.");
+				getTrafoPipeline().addMessage("Der Datensatz zu " + ticket.getString("invnr") + " konnte nicht identifiziert werden.");
 			} 
 			
 			
