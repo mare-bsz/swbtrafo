@@ -15,7 +15,7 @@ import bsz.swbtrafo.TrafoException;
 import bsz.swbtrafo.TrafoPipe;
 import bsz.swbtrafo.TrafoResult;
 
-public class FtpPipe  extends TrafoPipe {
+public class SftpPipe  extends TrafoPipe {
 	
 	@Override
 	public void finit() throws TrafoException {	

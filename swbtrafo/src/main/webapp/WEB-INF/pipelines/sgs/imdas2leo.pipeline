@@ -19,7 +19,7 @@
 		<parameter name="filename" value="sgs_museumsobjekte_%d" />
 	</pipe>
 	
-	<pipe className="bsz.swbtrafo.pipes.FtpPipe" >
+	<pipe className="bsz.swbtrafo.pipes.SftpPipe" >
 		<parameter name="ftpserver" value="bszftp" />
 		<parameter name="ftpuser" value="imdastest" />		
 		<parameter name="ftppassword" value="7h7Mo!q" />		
