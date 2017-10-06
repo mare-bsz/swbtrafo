@@ -129,12 +129,8 @@ public class XsltUtil {
 	public static String timestamp() {
 		Calendar date = Calendar.getInstance();
 		return date.get(Calendar.YEAR) + "-" + date.get(Calendar.MONTH) + "-" + date.get(Calendar.DAY_OF_MONTH) + "-" + date.get(Calendar.HOUR_OF_DAY) + ":" + date.get(Calendar.MINUTE) + ":" + date.get(Calendar.SECOND);
-	}
-	
-	
-	
-	
-	
+	}	
+		
 	public static String replaceReverseQuestionmark(String src) {		
 		
 		Matcher matcher = questionmarkPattern.matcher(src);

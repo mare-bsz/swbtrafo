@@ -120,14 +120,12 @@
 				  <xsl:choose>
 				    <xsl:when test="contains($kumulierte_ahk, '#')">
 					   <xsl:call-template name="string-replace-all">
-                         <xsl:with-param name="text" select="java:bsz.swbtrafo.util.XsltUtil.ahkPriority($kumulierte_ahk)" />
+                         <xsl:with-param name="text" select="substring-before(substring-after($kumulierte_ahk, 'Verm:'), '#')" />
                          <xsl:with-param name="replace" select="'.00'" />
                          <xsl:with-param name="by" select="''" />
                        </xsl:call-template>
-				      <!-- <xsl:value-of select="java:bsz.swbtrafo.util.XsltUtil.ahkPriority($kumulierte_ahk)" /> -->
 				    </xsl:when>
 				    <xsl:otherwise>
-					  <!-- <xsl:value-of select="translate($kumulierte_ahk,',','.')" /> -->
 					     <xsl:call-template name="string-replace-all">
                            <xsl:with-param name="text" select="translate($kumulierte_ahk,',','.')" />
                            <xsl:with-param name="replace" select="'.00'" />
