@@ -1,0 +1,50 @@
+package bsz.swbtrafo.pipes;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpException;
+
+import bsz.swbtrafo.TrafoException;
+import bsz.swbtrafo.TrafoPipe;
+import bsz.swbtrafo.TrafoResult;
+
+public class FtpPipe  extends TrafoPipe {
+	
+	@Override
+	public void finit() throws TrafoException {	
+		
+		JSch jsch = new JSch();
+        Session session = null;
+        try {
+            session = jsch.getSession(getParameter("ftpuser"), getParameter("ftpserver"), 22);
+            session.setConfig("StrictHostKeyChecking", "no");
+            session.setPassword(getParameter("ftppassword"));
+            session.connect();
+
+            Channel channel = session.openChannel("sftp");
+            channel.connect();
+            ChannelSftp sftpChannel = (ChannelSftp) channel;
+            for (TrafoResult result : trafoPipeline.getResults()) {
+		    	  try (InputStream fis = Files.newInputStream(result.getPath())) {
+		    		  sftpChannel.put(fis, result.getName());
+		    	  }
+		    }
+            sftpChannel.exit();
+            session.disconnect();
+        } catch (JSchException e) {
+        	throw new TrafoException(e.getMessage());
+        } catch (SftpException e) {
+        	throw new TrafoException(e.getMessage());
+        } catch (IOException io) {
+        	throw new TrafoException(io.getMessage());
+        } 
+ 		super.finit();
+ 	}
+}

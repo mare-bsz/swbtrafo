@@ -18,13 +18,26 @@
 	<pipe className="bsz.swbtrafo.pipes.leo.LEOWriterPipe" >
 		<parameter name="filename" value="sgs_museumsobjekte_%d" />
 	</pipe>
+	
+	<pipe className="bsz.swbtrafo.pipes.FtpPipe" >
+		<parameter name="ftpserver" value="bszftp" />
+		<parameter name="ftpuser" value="imdastest" />		
+		<parameter name="ftppassword" value="7h7Mo!q" />		
+	</pipe>
 
 	<pipe className="bsz.swbtrafo.pipes.MailPipe">
 		<parameter name="to" value="christof.mainberger@bsz-bw.de" />
-		<parameter name="from" value="jens.lill@bsz-bw.de" />
+		<parameter name="from" value="swbtrafo@bsz-bw.de" />
 		<parameter name="subject" value="SGS: Leo-Pipeline" />
-		<parameter name="message" value="Mit dem accout sgs wurde die imdas2leo-pipeline ausgelöst und in ${dateiname} geschrieben" />
+		<parameter name="message" value="Mit dem accout sgs wurde die imdas2leo-pipeline ausgelöst, in ${dateiname} geschrieben und per FTP übertragen" />
 	</pipe>
+	
+	<!--  pipe className="bsz.swbtrafo.pipes.MailPipe">
+		<parameter name="to" value="stefan.wolf@bsz-bw.de" />
+		<parameter name="from" value="swbtrafo@bsz-bw.de" />
+		<parameter name="subject" value="SGS: Leo-Pipeline" />
+		<parameter name="message" value="Mit dem accout sgs wurde die imdas2leo-pipeline ausgelöst, in ${dateiname} geschrieben und per FTP übertragen" />
+	</pipe -->
 
 	
 	<!-- pipe className="bsz.swbtrafo.pipes.ConsolePipe">
