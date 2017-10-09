@@ -26,10 +26,13 @@ public class MailPipe extends TrafoPipe {
 			
 			final Message msg = new MimeMessage( session );	
 			final InternetAddress addressTo = new InternetAddress(getParameter("to"));
-			final InternetAddress fromAddress = new InternetAddress(getParameter("from"));
+			final InternetAddress fromAddress = new InternetAddress(getParameter("from"));			
 			final String body = sub.replace(getParameter("message")) != null ? sub.replace(getParameter("message")) : "message nicht gefunden"; 
 			msg.setFrom(fromAddress);
 			msg.setRecipient( Message.RecipientType.TO, addressTo );	
+			if (getParameter("cc") != null) {
+				msg.setRecipient( Message.RecipientType.CC, new InternetAddress(getParameter("cc")));
+			}
 			msg.setSubject(getParameter("subject"));
 			msg.setContent(body, "text/plain" );
 			Transport.send( msg );

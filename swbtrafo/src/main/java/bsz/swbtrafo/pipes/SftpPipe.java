@@ -23,7 +23,8 @@ public class SftpPipe  extends TrafoPipe {
 		JSch jsch = new JSch();
         Session session = null;
         try {
-            session = jsch.getSession(getParameter("ftpuser"), getParameter("ftpserver"), 22);
+        	final int port = getParameter("ftpport") != null ? Integer.parseInt(getParameter("ftpport")) : 22;
+            session = jsch.getSession(getParameter("ftpuser"), getParameter("ftpserver"), port);
             session.setConfig("StrictHostKeyChecking", "no");
             session.setPassword(getParameter("ftppassword"));
             session.connect();
