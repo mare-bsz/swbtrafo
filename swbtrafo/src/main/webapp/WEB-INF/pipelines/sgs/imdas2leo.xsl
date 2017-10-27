@@ -35,6 +35,13 @@
 					<xsl:value-of select="normalize-space(./OBJ_USER_FIELDS/TEXTDIGITALERKATALOGDE)"/>
 				</kurzbeschreibung>
 			</xsl:if>
+			<xsl:if test="not(contains(OBJ_LITERATURE/BUCHTITEL,'Online-Katalog'))">
+				<literatur>
+					<xsl:apply-templates select="OBJ_LITERATURE[contains(NOTIZ_LIT,'[Okat=')]">
+						<xsl:sort select="JAHR" order="descending"/>
+					</xsl:apply-templates>
+				</literatur>
+			</xsl:if>
 			<quelleSammlung><xsl:value-of select="./COLL_OBJ/SAMMLUNG"/></quelleSammlung>
     		<xsl:if test="./INVENTARNUMMER">
 				<identifikatoren>
@@ -65,12 +72,7 @@
 			</xsl:if>
 			<objekttyp>
 				<xsl:value-of select="./TERM/OBJEKTBEZEICHNUNG_THESAURI"/>
-			</objekttyp>
-			<xsl:if test="not(contains(OBJ_LITERATURE/BUCHTITEL,'Online-Katalog'))">
-				<literatur>
-					<xsl:apply-templates select="OBJ_LITERATURE" />
-				</literatur>
-			</xsl:if>
+			</objekttyp>			
     		<weitereAngabenWerk>
 				<xsl:if test="TERM/MATERIAL">
 					<xsl:apply-templates select="TERM/MATERIAL" />
@@ -106,7 +108,11 @@
 				</urlVoll>
 				<altText><xsl:value-of select="concat(../TERM/OBJEKTBEZEICHNUNG_THESAURI,': ',../REAL_OBJ/OBJEKTTITEL)"/></altText>
 				<beschreibung><xsl:value-of select="concat(../TERM/OBJEKTBEZEICHNUNG_THESAURI,': ',../REAL_OBJ/OBJEKTTITEL)"/></beschreibung>
-				<copyright><xsl:value-of select="concat(' [Copyright: ',../OBJ_USER_FIELDS/URHEBERRECHT,']')"/></copyright>
+				<!-- copyright>
+					<xsl:if test="string(../OBJ_USER_FIELDS/URHEBERRECHT) != 'gemeinfrei'">
+						<xsl:value-of select="concat(' [Copyright: ',../OBJ_USER_FIELDS/URHEBERRECHT,']')"/>
+					</xsl:if>
+				</copyright -->
 				<typ><xsl:text>BILD</xsl:text></typ>
 			</medium>
 		</xsl:if>
@@ -164,11 +170,10 @@
 	<!-- Zusammensetzung der Literaturangabe -->
 	
 	<xsl:template match="OBJ_LITERATURE">
-		<xsl:for-each select="." >
-			<xsl:if test="contains(NOTIZ_LIT,'[Okat=')">
-				<xsl:value-of select="AUTOR" /><xsl:text>: </xsl:text><xsl:value-of select="BUCHTITEL" /><xsl:text>, </xsl:text><xsl:value-of select="ORT" /><xsl:text> </xsl:text><xsl:value-of select="JAHR" />
-			</xsl:if>
-		</xsl:for-each>
+		<xsl:if test="position() != 1">
+		 	<xsl:text>&lt;br/&gt;</xsl:text>
+		</xsl:if>
+		<xsl:value-of select="AUTOR" /><xsl:text>: </xsl:text><xsl:value-of select="BUCHTITEL" /><xsl:text>, </xsl:text><xsl:value-of select="ORT" /><xsl:text> </xsl:text><xsl:value-of select="JAHR" />		
 	</xsl:template> 
 
 	<!-- Teil für Sammelfeld: Material, Mehrfacheinträge / falls vorhanden -->

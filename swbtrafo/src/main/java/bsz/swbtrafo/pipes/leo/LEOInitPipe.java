@@ -5,21 +5,16 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import bsz.swbtrafo.TrafoException;
 import bsz.swbtrafo.TrafoPipe;
 import bsz.swbtrafo.TrafoResult;
-import bsz.swbtrafo.TrafoTicket;
-import nu.xom.Serializer;
 
 /** 
  * @author Christof Mainberger (christof.mainberger@bsz-bw.de) *
  */
-public class LEOWriterPipe extends TrafoPipe {
-	
-	ZipOutputStream out = null;	
+public class LEOInitPipe extends TrafoPipe {
 	
 	@Override
 	public void init() throws TrafoException {
@@ -35,38 +30,23 @@ public class LEOWriterPipe extends TrafoPipe {
 		result.setEncoding("UTF-8");
 		trafoPipeline.addResult(result);
 		try {			
-			out = new ZipOutputStream(new FileOutputStream(trafoPipeline.getTempPath(filename + ".zip")));	
-			out.putNextEntry(new ZipEntry(filename + ".xml"));
+			trafoPipeline.setAttribute("zipoutputstream", new ZipOutputStream(new FileOutputStream(trafoPipeline.getTempPath(filename + ".zip"))));
 		} catch (IOException e) {
 			throw new TrafoException("Erzeugen des Zip-Files: " + trafoPipeline.getTempPath(filename + ".zip"), e);
 		}
 		super.init();
-	}
-		
-	@Override
-	public void process(TrafoTicket ticket) throws TrafoException {	
-		try {			
-			final Serializer serializer = new Serializer(out, "UTF-8");
-			serializer.setIndent(0); // kein Indent
-			serializer.setMaxLength(0); // beliebige Länge
-			serializer.write(ticket.getDocument());
-			serializer.flush();
-		} catch (IOException e) {
-			throw new TrafoException(e);
-		}
-		super.process(ticket);
-	}
+	}	
 	
 	@Override
 	public void finit() throws TrafoException {
+		super.finit();
 		try {
-			out.closeEntry();
-			out.flush();
-			out.close();			
+			ZipOutputStream zipOutputStream = (ZipOutputStream) trafoPipeline.getAttribute("zipoutputstream");
+			zipOutputStream.flush();
+			zipOutputStream.close();			
 		} catch (IOException e) {
 			throw new TrafoException(e);
-		}
-		super.finit();
+		}		
 	}
 	
 	private String determineFilename() {

@@ -8,8 +8,6 @@
 
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-             	xmlns:xs="http://www.leo-bw.de/xsd/leobw-1.0.0" 
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           		xmlns:java="http://xml.apache.org/xalan/java"
     			exclude-result-prefixes="java">
     
@@ -17,33 +15,47 @@
     <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes" />
     
 	<xsl:template match="/">
-		<leobwMetaData xmlns="http://www.leo-bw.de/xsd/leobw-1.0.0">
-			<dokumentListe>
-				<xsl:apply-templates select="OBJECTS" />
-			</dokumentListe>
-		</leobwMetaData>
+		<xsl:apply-templates select="OBJECTS" />
 	</xsl:template>  
     
     <xsl:template match="OBJECTS/OBJECT">    
-    	<multimedia>
+    	<multimedia xmlns="http://www.leo-bw.de/xsd/leobw-1.0.0">
 			<idInPartnersystem><xsl:value-of select="./IMDAS_ID"/></idInPartnersystem>
 			<xsl:if test="./REAL_OBJ/OBJEKTTITEL">
 				<titelName><xsl:value-of select="normalize-space(./REAL_OBJ/OBJEKTTITEL)"/></titelName>
 			</xsl:if>
-			<xsl:if test="./STOR_LOC/RTF/RTFPFAD">
+			<xsl:choose>
+			  <xsl:when test="./STOR_LOC/RTF/RTFPFAD">
 				<kurzbeschreibung>
 					<xsl:value-of select="normalize-space(./STOR_LOC/RTF/RTFPFAD)"/>
 				</kurzbeschreibung>
-			</xsl:if>
+			  </xsl:when>
+              <xsl:otherwise>
+			    <xsl:choose>
+				<xsl:when test="./BESCHREIBUNG">
+					<kurzbeschreibung>
+						<xsl:value-of select="normalize-space(./BESCHREIBUNG)"/>
+					</kurzbeschreibung>
+				</xsl:when>
+				<xsl:otherwise>
+					<kurzbeschreibung>
+						<xsl:value-of select="normalize-space(./KURZBESCHREIBUNG)"/>
+					</kurzbeschreibung>
+				</xsl:otherwise>
+				</xsl:choose>
+			  </xsl:otherwise>
+            </xsl:choose>
 			<quelleSammlung><xsl:value-of select="concat(./COLL_OBJ/BEREICH,' - ',./COLL_OBJ/SAMMLUNG)"/></quelleSammlung>
     		<xsl:if test="./INVENTARNUMMER">
 				<identifikatoren>
 					<xsl:value-of select="concat(normalize-space(./INVENTARNUMMER),' [Inv.Nr.]')" />
 				</identifikatoren>
 			</xsl:if>
+			<schlagwoerter>
 			<xsl:for-each select="./TERM_OBJ/SCHLAGWORT">
-				<schlagwoerter><xsl:value-of select="." /><xsl:if test="position()!=last()">, </xsl:if></schlagwoerter>
+				<xsl:value-of select="." /><xsl:if test="position()!=last()">, </xsl:if>
 			</xsl:for-each>
+			</schlagwoerter>
     		<weiterImPartnersystemUrl><xsl:text>http://swbexpo.bsz-bw.de/blm/</xsl:text></weiterImPartnersystemUrl>
     		<mediumListe>
 				<xsl:apply-templates select="STOR_LOC" />
@@ -99,10 +111,11 @@
     
     <xsl:template match="STOR_LOC">
 		<xsl:if test="contains(./BILDBEZEICHNUNG,' (Digitaler Katalog)')">
-			<medium>
+			<medium xmlns="http://www.leo-bw.de/xsd/leobw-1.0.0">
 				<mime><xsl:text>image/jpeg</xsl:text></mime>
 				<urlVoll>
-					<xsl:text>http://swbexpo.bsz-bw.de/blm/image/zoom?id=</xsl:text><xsl:value-of select="concat(../IMDAS_ID,'&amp;img=')" /><xsl:value-of select="position()"/>
+					<!-- xsl:text>http://swbexpo.bsz-bw.de/blm/image/zoom?id=</xsl:text><xsl:value-of select="concat(../IMDAS_ID,'&amp;img=')" /><xsl:value-of select="position()"/ -->
+					<xsl:value-of select="DATEINAME" />
 				</urlVoll>
 				<altText><xsl:value-of select="concat(../TERM/OBJEKTBEZEICHNUNG_THESAURI,': ',../REAL_OBJ/OBJEKTTITEL)"/></altText>
 				<beschreibung><xsl:value-of select="concat(../TERM/OBJEKTBEZEICHNUNG_THESAURI,': ',../REAL_OBJ/OBJEKTTITEL)"/></beschreibung>
@@ -115,7 +128,7 @@
 	<!-- Textbasierte Zeitangabe (kein Datierungsthesaurus mit definierten Start- und Endpunkten) -->
 	
 	<xsl:template match="OBJ_SPECIALS/ENTSTEHUNGSZEIT">
-		<datierung>
+		<datierung xmlns="http://www.leo-bw.de/xsd/leobw-1.0.0">
 			<start>
 				<beschreibend>
 					<xsl:value-of select="."/>
@@ -126,7 +139,7 @@
 	</xsl:template>
 	
 	<xsl:template match="TERM/DATIERUNG">
-		<datierung>
+		<datierung xmlns="http://www.leo-bw.de/xsd/leobw-1.0.0">
 			<start>
 				<beschreibend>
 					<xsl:value-of select="."/>
@@ -139,7 +152,7 @@
 	<!-- Ortsangaben -->
 	
 	<xsl:template match="TERM[ORTSTYP='Herstellungsort']">
-		<ortsbezugWerk>
+		<ortsbezugWerk xmlns="http://www.leo-bw.de/xsd/leobw-1.0.0">
 			<ortsname><xsl:value-of select="./NAME"/></ortsname>
 			<xsl:if test="./NAME">
 				<typ>DOKUMENT_MULTIMEDIA_WERK</typ>
@@ -157,7 +170,7 @@
 	<!-- Autoren-Personen mit Künstlerhaken in imdas pro: direkt im Element PERSON, ggf. mit Normnummer  -->
 	
 	<xsl:template match="PERSON">
-		<autor>
+		<autor xmlns="http://www.leo-bw.de/xsd/leobw-1.0.0">
 			<name><xsl:value-of select="./ANZEIGENAME"/></name>
 			<xsl:if test="./ANZEIGENAME">
 				<typ>DOKUMENT_AUTOR</typ>
@@ -175,7 +188,7 @@
 	<!-- Weitere Personen im Element PERSON/WEITEREPERSONEN, ggf. mit Normnummer -->
 	
 	<xsl:template match="PERSON/WEITEREPERSONEN">
-		<beteiligtePersonWerk>
+		<beteiligtePersonWerk xmlns="http://www.leo-bw.de/xsd/leobw-1.0.0">
 			<name><xsl:value-of select="./ANZEIGENAME"/></name>
 			<xsl:if test="./ANZEIGENAME">
 				<typ>DOKUMENT_BETEILIGT</typ>

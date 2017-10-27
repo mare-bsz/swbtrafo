@@ -23,15 +23,13 @@ public class MailPipe extends TrafoPipe {
 			final Properties props = new Properties();
 			props.put("mail.smtp.host", trafoPipeline.getTrafoContext().getInitParameter("mail.smtp.host"));
 			final Session session = Session.getInstance(props, null);			
-			
 			final Message msg = new MimeMessage( session );	
-			final InternetAddress addressTo = new InternetAddress(getParameter("to"));
 			final InternetAddress fromAddress = new InternetAddress(getParameter("from"));			
 			final String body = sub.replace(getParameter("message")) != null ? sub.replace(getParameter("message")) : "message nicht gefunden"; 
 			msg.setFrom(fromAddress);
-			msg.setRecipient( Message.RecipientType.TO, addressTo );	
+			msg.addRecipients( Message.RecipientType.TO, InternetAddress.parse(getParameter("to")));	
 			if (getParameter("cc") != null) {
-				msg.setRecipient( Message.RecipientType.CC, new InternetAddress(getParameter("cc")));
+				msg.addRecipients( Message.RecipientType.CC, InternetAddress.parse(getParameter("cc")));
 			}
 			msg.setSubject(getParameter("subject"));
 			msg.setContent(body, "text/plain" );

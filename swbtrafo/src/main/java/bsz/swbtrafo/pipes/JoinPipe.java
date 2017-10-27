@@ -22,7 +22,7 @@ public class JoinPipe extends TrafoPipe {
 	@Override
 	public void init() throws TrafoException {
 		final String path[] = getParameter("container").split("#");
-		root = prepareElement(path[0]);		
+		root = prepareElement(path[0]);
 		container = root;
 		for (int i = 1; i < path.length; i++) {			
 			final Element current = prepareElement(path[i]);

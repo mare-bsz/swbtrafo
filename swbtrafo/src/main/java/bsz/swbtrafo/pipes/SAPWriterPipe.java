@@ -29,6 +29,9 @@ public class SAPWriterPipe extends DownloadPipe {
 			setFilename(getParameter("filename").replace("%d", getCurrentDate()));
 		} else {
 			setFilename("download.txt");
+		}	
+		if (getParameter("encoding") != null) {
+			setEncoding(getParameter("encoding"));
 		}		
 		super.init();			
 		if (getParameter("separator") != null) {
