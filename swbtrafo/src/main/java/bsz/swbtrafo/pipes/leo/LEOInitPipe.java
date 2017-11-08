@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import bsz.swbtrafo.TrafoException;
@@ -30,7 +31,9 @@ public class LEOInitPipe extends TrafoPipe {
 		result.setEncoding("UTF-8");
 		trafoPipeline.addResult(result);
 		try {			
-			trafoPipeline.setAttribute("zipoutputstream", new ZipOutputStream(new FileOutputStream(trafoPipeline.getTempPath(filename + ".zip"))));
+			final ZipOutputStream zipoutputStream = new ZipOutputStream(new FileOutputStream(trafoPipeline.getTempPath(filename + ".zip")));
+			zipoutputStream.putNextEntry(new ZipEntry("Bilder/"));
+			trafoPipeline.setAttribute("zipoutputstream", zipoutputStream);
 		} catch (IOException e) {
 			throw new TrafoException("Erzeugen des Zip-Files: " + trafoPipeline.getTempPath(filename + ".zip"), e);
 		}

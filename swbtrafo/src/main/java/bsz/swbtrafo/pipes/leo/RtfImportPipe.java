@@ -17,6 +17,7 @@ import bsz.swbtrafo.TrafoTicket;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Nodes;
+import nu.xom.XPathContext;
 
 /** 
  * @author Christof Mainberger (christof.mainberger@bsz-bw.de) *
@@ -27,10 +28,10 @@ public class RtfImportPipe extends TrafoPipe {
 	public void process(TrafoTicket ticket) throws TrafoException {	
 		
 		Document xom = ticket.getDocument();
-		Nodes rtfNodes = xom.query(getParameter("rtfPath"));
+		XPathContext context = new XPathContext("leo", "http://www.leo-bw.de/xsd/leobw-1.0.0");
+		Nodes rtfNodes = xom.query(getParameter("rtfPath"), context);
 		if (rtfNodes.size() > 0) {		
 			Element rtf = (Element) rtfNodes.get(0);
-						
 			File rtfFile = new File(getParameter("imagePath") + rtf.getValue().substring(3).replace('\\', '/'));
 			if (rtfFile.exists()) {
 				try {
@@ -41,9 +42,9 @@ public class RtfImportPipe extends TrafoPipe {
 					throw new TrafoException(rtfFile.getAbsolutePath() + ": " + e.getMessage());
 				}
 			} else {
-				throw new TrafoException(rtfFile.getAbsolutePath() + " exisitiert nicht");
+				System.out.println("BLM-LEO-Pipeline: RTF-File fehlt: " + rtfFile.getAbsolutePath());
 			}
-		}
+		} 
 		super.process(ticket);
 	}
 		

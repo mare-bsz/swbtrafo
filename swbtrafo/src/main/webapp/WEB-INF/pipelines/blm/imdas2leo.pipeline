@@ -6,26 +6,26 @@
 
 	<pipe className="bsz.swbtrafo.pipes.XmlReaderPipe">
 		<parameter name="records" value="OBJECTS/OBJECT" />
-	</pipe>
-	
-	<!-- pipe className="bsz.swbtrafo.pipes.XSLTPipe">
-		<parameter name="rtfPath" value="STOR_LOC/RTF/RTFPFAD" />
-		<parameter name="imagePath" value="/mnt/musis/z/blm" />
-	</pipe -->
+	</pipe>	
 	
 	<pipe className="bsz.swbtrafo.pipes.leo.LEOInitPipe">
 		<parameter name="filename" value="blm_museumsobjekte_%d" />
-	</pipe>	
-	
-	<pipe className="bsz.swbtrafo.pipes.leo.LEOIncludeImgPipe">
-		<parameter name="imgPath" value="//STOR_LOC/BILDPFAD" />
-		<parameter name="imagePath" value="C:\java\work\data\blm\" />
-	</pipe>
+	</pipe>		
 		
 	<pipe className="bsz.swbtrafo.pipes.XSLTPipe">
 		<parameter name="stylesheet" value="blm/imdas2leo.xsl" />
 		<listener className="bsz.swbtrafo.listener.CountListener" />
 	</pipe>	
+
+	<pipe className="bsz.swbtrafo.pipes.leo.RtfImportPipe">
+		<parameter name="rtfPath" value="//leo:kurzbeschreibung" />
+		<parameter name="imagePath" value="/mnt/musis/z/blm/" />
+	</pipe>
+
+	<pipe className="bsz.swbtrafo.pipes.leo.LEOIncludeImgPipe">
+		<parameter name="imgPath" value="//leo:imgpath" />
+		<parameter name="imagePath" value="/mnt/musis/z/blm/" />
+	</pipe>
 	
 	<pipe className="bsz.swbtrafo.pipes.JoinPipe">
 		<parameter name="container" value="leobwMetaData@xmlns=http://www.leo-bw.de/xsd/leobw-1.0.0#dokumentListe" />

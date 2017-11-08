@@ -24,27 +24,11 @@
 			<xsl:if test="./REAL_OBJ/OBJEKTTITEL">
 				<titelName><xsl:value-of select="normalize-space(./REAL_OBJ/OBJEKTTITEL)"/></titelName>
 			</xsl:if>
-			<xsl:choose>
-			  <xsl:when test="./STOR_LOC/RTF/RTFPFAD">
+			<xsl:for-each select="./STOR_LOC[contains(RTF/RTFPFAD, '.rtf')]">
 				<kurzbeschreibung>
-					<xsl:value-of select="normalize-space(./STOR_LOC/RTF/RTFPFAD)"/>
+					<xsl:value-of select="./RTF/RTFPFAD"/>
 				</kurzbeschreibung>
-			  </xsl:when>
-              <xsl:otherwise>
-			    <xsl:choose>
-				<xsl:when test="./BESCHREIBUNG">
-					<kurzbeschreibung>
-						<xsl:value-of select="normalize-space(./BESCHREIBUNG)"/>
-					</kurzbeschreibung>
-				</xsl:when>
-				<xsl:otherwise>
-					<kurzbeschreibung>
-						<xsl:value-of select="normalize-space(./KURZBESCHREIBUNG)"/>
-					</kurzbeschreibung>
-				</xsl:otherwise>
-				</xsl:choose>
-			  </xsl:otherwise>
-            </xsl:choose>
+			</xsl:for-each>			
 			<quelleSammlung><xsl:value-of select="concat(./COLL_OBJ/BEREICH,' - ',./COLL_OBJ/SAMMLUNG)"/></quelleSammlung>
     		<xsl:if test="./INVENTARNUMMER">
 				<identifikatoren>
@@ -58,7 +42,9 @@
 			</schlagwoerter>
     		<weiterImPartnersystemUrl><xsl:text>http://swbexpo.bsz-bw.de/blm/</xsl:text></weiterImPartnersystemUrl>
     		<mediumListe>
-				<xsl:apply-templates select="STOR_LOC" />
+				<xsl:apply-templates select="STOR_LOC[contains(./BILDBEZEICHNUNG,' (Digitaler Katalog')]"  mode="bild">
+					<xsl:sort select="./REIHUNG" />
+				</xsl:apply-templates>
 			</mediumListe>
 			<xsl:if test="./OBJ_SPECIALS/ENTSTEHUNGSZEIT">
 				<datierungListe>
@@ -107,22 +93,21 @@
 				</schlagwortDefinitionListe>
 			</xsl:if>
 		</multimedia>
-    </xsl:template>
+    </xsl:template>    
     
-    <xsl:template match="STOR_LOC">
-		<xsl:if test="contains(./BILDBEZEICHNUNG,' (Digitaler Katalog)')">
-			<medium xmlns="http://www.leo-bw.de/xsd/leobw-1.0.0">
-				<mime><xsl:text>image/jpeg</xsl:text></mime>
-				<urlVoll>
-					<!-- xsl:text>http://swbexpo.bsz-bw.de/blm/image/zoom?id=</xsl:text><xsl:value-of select="concat(../IMDAS_ID,'&amp;img=')" /><xsl:value-of select="position()"/ -->
-					<xsl:value-of select="DATEINAME" />
-				</urlVoll>
-				<altText><xsl:value-of select="concat(../TERM/OBJEKTBEZEICHNUNG_THESAURI,': ',../REAL_OBJ/OBJEKTTITEL)"/></altText>
-				<beschreibung><xsl:value-of select="concat(../TERM/OBJEKTBEZEICHNUNG_THESAURI,': ',../REAL_OBJ/OBJEKTTITEL)"/></beschreibung>
-				<copyright><xsl:text> [Copyright: Badisches Landesmuseum Karlsruhe]</xsl:text></copyright>
-				<typ><xsl:text>BILD</xsl:text></typ>
-			</medium>
-		</xsl:if>
+    <xsl:template match="STOR_LOC" mode="bild">
+		<medium xmlns="http://www.leo-bw.de/xsd/leobw-1.0.0">
+			<mime><xsl:text>image/jpeg</xsl:text></mime>
+			<pfadVoll>
+				<!-- xsl:text>http://swbexpo.bsz-bw.de/blm/image/zoom?id=</xsl:text><xsl:value-of select="concat(../IMDAS_ID,'&amp;img=')" /><xsl:value-of select="position()"/ -->
+				<xsl:text>Bilder/</xsl:text><xsl:value-of select="DATEINAME" />
+			</pfadVoll>
+			<altText><xsl:value-of select="concat(../TERM/OBJEKTBEZEICHNUNG_THESAURI,': ',../REAL_OBJ/OBJEKTTITEL)"/></altText>
+			<beschreibung><xsl:value-of select="concat(../TERM/OBJEKTBEZEICHNUNG_THESAURI,': ',../REAL_OBJ/OBJEKTTITEL)"/></beschreibung>
+			<copyright><xsl:text> [Copyright: Badisches Landesmuseum Karlsruhe]</xsl:text></copyright>
+			<typ><xsl:text>BILD</xsl:text></typ>
+			<imgpath><xsl:value-of select="./BILDPFAD" /></imgpath>
+		</medium>
 	</xsl:template>
 	
 	<!-- Textbasierte Zeitangabe (kein Datierungsthesaurus mit definierten Start- und Endpunkten) -->
