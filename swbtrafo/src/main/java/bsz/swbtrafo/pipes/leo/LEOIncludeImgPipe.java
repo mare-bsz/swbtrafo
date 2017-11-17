@@ -7,10 +7,8 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import bsz.swbtrafo.TrafoException;
-import bsz.swbtrafo.TrafoPipe;
 import bsz.swbtrafo.TrafoTicket;
 import nu.xom.Document;
 import nu.xom.Element;
@@ -20,17 +18,20 @@ import nu.xom.XPathContext;
 /** 
  * @author Christof Mainberger (christof.mainberger@bsz-bw.de) *
  */
-public class LEOIncludeImgPipe extends TrafoPipe {
+public class LEOIncludeImgPipe extends ZipInitPipe {
 	
-	ZipOutputStream zipOutputStream = null;	
 	XPathContext context;
 	Set<String> bilder = new HashSet<String>();
 	
 	@Override
 	public void init() throws TrafoException {
-		context = new XPathContext("leo", "http://www.leo-bw.de/xsd/leobw-1.0.0");
-		zipOutputStream = (ZipOutputStream) trafoPipeline.getAttribute("zipoutputstream");		
 		super.init();
+		context = new XPathContext("leo", "http://www.leo-bw.de/xsd/leobw-1.0.0");
+		try {
+			zipOutputStream.putNextEntry(new ZipEntry("Bilder/"));
+		} catch (IOException e) {
+			throw new TrafoException("Ordner Bilder laesst sich nicht anlegen: " + e.getMessage());
+		}		
 	}
 			
 	@Override

@@ -8,10 +8,6 @@
 		<parameter name="records" value="OBJECTS/OBJECT" />
 	</pipe>	
 	
-	<pipe className="bsz.swbtrafo.pipes.leo.LEOInitPipe">
-		<parameter name="filename" value="blm_museumsobjekte_%d" />
-	</pipe>		
-		
 	<pipe className="bsz.swbtrafo.pipes.XSLTPipe">
 		<parameter name="stylesheet" value="blm/imdas2leo.xsl" />
 		<listener className="bsz.swbtrafo.listener.CountListener" />
@@ -23,6 +19,7 @@
 	</pipe>
 
 	<pipe className="bsz.swbtrafo.pipes.leo.LEOIncludeImgPipe">
+		<parameter name="filename" value="blm_museumsobjekte_%d" />
 		<parameter name="imgPath" value="//leo:imgpath" />
 		<parameter name="imagePath" value="/mnt/musis/z/blm/" />
 	</pipe>
@@ -31,14 +28,14 @@
 		<parameter name="container" value="leobwMetaData@xmlns=http://www.leo-bw.de/xsd/leobw-1.0.0#dokumentListe" />
 	</pipe>
 				
-	<pipe className="bsz.swbtrafo.pipes.leo.LEOWriterPipe2" >
+	<pipe className="bsz.swbtrafo.pipes.leo.LEOWriterPipe" >
 	</pipe>
 
 	<!-- <pipe className="bsz.swbtrafo.pipes.SftpPipe" >
-		<parameter name="ftpserver" value="leo-bw.de" />
-		<parameter name="ftpuser" value="blm_museumsobjekte" />
-		<parameter name="ftpport" value="333" />		
-		<parameter name="ftppassword" value="BfvTD449" />		
+		<parameter name="ftpserver" value="********" />
+		<parameter name="ftpuser" value="***********" />
+		<parameter name="ftpport" value="***" />		
+		<parameter name="ftppassword" value="*********" />		
 	</pipe -->
 
 	<!--  pipe className="bsz.swbtrafo.pipes.MailPipe">
