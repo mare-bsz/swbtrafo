@@ -74,10 +74,10 @@ public class CreateBildladeFilePipe extends DownloadPipe {
 						wrt.write(rs.getString("objektbezeichnung") +"\t");
 						wrt.write("LZA\t");
 						wrt.write("\t");
-						wrt.write("Langzeitarchivierung\t");
+						wrt.write(ticket.getString("aggregation") + "\t");
 						wrt.write("Mat. zum Objekt\t");
 						wrt.write(rs.getString("invnr") +"\t");
-						wrt.write("Y:" + rs.getString("pfad").trim().replace('/', '\\') +"\t");
+						wrt.write("Y:" + rs.getString("pfad").trim().replace('/', '\\'));
 						wrt.write("\n");	
 					}
 					i++;					
