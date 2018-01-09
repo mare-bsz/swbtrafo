@@ -20,54 +20,56 @@
 	-->	
 		
 	<xsl:template match="/">
-		<xsl:apply-templates select="imdasData/object/row[subObject[@id='SAP-Bewertung abgeschlossen']/row/field = 'Ja']" mode="rec" />
+		<xsl:apply-templates select="OBJECTS/OBJECT[OBJ_USER_FIELDS/SAP/SAP-BEWERTUNG_ABGESCHLOSSEN = '1']" mode="rec" /> 
 	</xsl:template>
 
-	<xsl:template match="row" mode="rec">
+	<xsl:template match="OBJECT" mode="rec">
 			 
 		<xsl:call-template name="ausgabe">	
 		
-			<xsl:with-param name="bezeichnung_1" select="./field[@id='Objektbezeichnung']" />
+			<xsl:with-param name="bezeichnung_1" select="./KONVOLUTBEZEICHNUNG" />
 			
-			<xsl:with-param name="bezeichnung_2" select="./field[@id='Titel (Museumsobjekt)']" />			
+			<xsl:with-param name="bezeichnung_2" select="./KONVOLUTBEZEICHNUNG" />			
 			
-			<xsl:with-param name="inventarnummer" select="./field[@id='Inv.Nr.']"/>
+			<xsl:with-param name="inventarnummer" select="./INVENTARNUMMER"/>
 			
-			<xsl:with-param name="imdas-nummer" select="./field[@id='IMDAS ID']" />
+			<xsl:with-param name="imdas-nummer" select="./IMDAS_ID" />
 						
 			<xsl:with-param name="aktivierungsdatum" >	
-				<xsl:if test="normalize-space(./field[@id='Eingangsdatum']) != ''">	
-					<xsl:value-of select="./field[@id='Eingangsdatum']" />
+				<xsl:if test="normalize-space(./EINGANGSDATUM) != ''">	
+					<xsl:value-of select="substring(./EINGANGSDATUM,9,2)" /><xsl:text>.</xsl:text>
+					<xsl:value-of select="substring(./EINGANGSDATUM,6,2)" /><xsl:text>.</xsl:text>
+					<xsl:value-of select="substring(./EINGANGSDATUM,1,4)" />
 				</xsl:if>
-				<xsl:if test="normalize-space(./field[@id='Eingangsdatum']) = ''">						
+				<xsl:if test="normalize-space(./EINGANGSDATUM) = ''">						
 					<xsl:call-template name="normDate">
-						<xsl:with-param name="datum" select="./field[@id='Eingangsdatum (Text)']" />
+						<xsl:with-param name="datum" select="./EINGANGSDATUM_TEXT" />
 					</xsl:call-template>
 				</xsl:if> 
 			</xsl:with-param>		
 			
 			<xsl:with-param name="kostenstelle">
 					<xsl:choose>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Aufsammlungen')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Alte Sammlungsbestände')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Dauerleihnahme')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Depotfund')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Donation')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Eigenprodukt')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Erwerbungen')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Funde')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Fund')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Kauf')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Leihnahme')"><xsl:text></xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Museumsstiftung')"><xsl:text>7940111111</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Nachlass')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Schenkung')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Spende')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Tausch')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Unbekannt')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'unbekannt')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Zuweisung')"><xsl:text>7940000000</xsl:text></xsl:when>
-						<xsl:when test="contains(./field[@id='Eingangsart'], 'Zentralfonds')"><xsl:text>7940111111</xsl:text></xsl:when>					
+						<xsl:when test="contains(./EINGANGSART, 'Aufsammlungen')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Alte Sammlungsbestände')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Dauerleihnahme')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Depotfund')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Donation')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Eigenprodukt')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Erwerbungen')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Funde')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Fund')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Kauf')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Leihnahme')"><xsl:text></xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Museumsstiftung')"><xsl:text>7940111111</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Nachlass')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Schenkung')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Spende')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Tausch')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Unbekannt')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'unbekannt')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Zuweisung')"><xsl:text>7940000000</xsl:text></xsl:when>
+						<xsl:when test="contains(./EINGANGSART, 'Zentralfonds')"><xsl:text>7940111111</xsl:text></xsl:when>					
 					</xsl:choose>
 				</xsl:with-param>
 						
@@ -75,39 +77,29 @@
 			<xsl:with-param name="ordnungsbegriff" select="'Konvolut'" />
 			
 			<xsl:with-param name="menge">
-				<xsl:if test="normalize-space(./field[@id='Teile']) != ''">
-					<xsl:value-of select="./field[@id='Teile']" />
+				<xsl:if test="normalize-space(./TEILE) != ''">
+					<xsl:value-of select="./TEILE" />
 				</xsl:if>
-				<xsl:if test="normalize-space(./field[@id='Teile']) = ''">
+				<xsl:if test="normalize-space(./TEILE) = ''">
 					<xsl:text>1</xsl:text>
 				</xsl:if>
 			</xsl:with-param>
-						
-			<xsl:with-param name="kummulierte_ahk">
-								
-				<xsl:choose>
-					<xsl:when test="./subObject[@id='SAP-Wertekategorie']/row/field = 'A - Erinnerungswert 1 Euro'">1</xsl:when>
-					<xsl:when test="./subObject[@id='SAP-Wertekategorie']/row/field = 'B - Mittelwert 50.000 Euro'">50000</xsl:when>
-					<xsl:when test="./subObject[@id='SAP-Wertekategorie']/row/field = 'C - Mittelwert 500.000 Euro'">500000</xsl:when>
-					<xsl:when test="./subObject[@id='Währungen']/row/field[@id='WType'] = 'Vermögensbewertung A - Erinnerungswert 1 Euro'">1</xsl:when>
-					<xsl:when test="./subObject[@id='Währungen']/row/field[@id='WType'] = 'Vermögensbewertung B - Mittelwert 50.000 Euro'">50000</xsl:when>
-					<xsl:when test="./subObject[@id='Währungen']/row/field[@id='WType'] = 'Vermögensbewertung C - Mittelwert 500.000 Euro'">500000</xsl:when>
-					<xsl:when test="./subObject[@id='Währungen']/row[starts-with(field[@id='WType'],'Vermögensbewertung D')]">
-						<xsl:value-of select="./subObject[@id='Währungen']/row[starts-with(field[@id='WType'],'Vermögensbewertung D')]/field[@id='WValue']" />
-					</xsl:when>
-					<xsl:otherwise>						
-						<xsl:if test="normalize-space(./subObject[@id='SAP-Einzelbewertung (D) in Euro']/row/field) != ''">
-							<xsl:value-of select="translate(./subObject[@id='SAP-Einzelbewertung (D) in Euro']/row/field, '.', '')" />
-						</xsl:if>
-						<xsl:if test="normalize-space(./subObject[@id='SAP-Einzelbewertung (D) in Euro']/row/field) = ''">
-							<xsl:call-template name="waehrungen">
-								<xsl:with-param name="waehrungen" select="./subObject[@id='Währungen']"/>
-							</xsl:call-template>		
-															
-						</xsl:if>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:with-param>
+											
+			<xsl:with-param name="kummulierte_ahk">					
+					<xsl:choose>
+						<xsl:when test="./OBJ_VALUE/WERTEART = 'Vermögensbewertung A - Erinnerungswert 1 Euro'">1</xsl:when>
+						<xsl:when test="./OBJ_VALUE/WERTEART = 'Vermögensbewertung B - Mittelwert 50.000 Euro'">50000</xsl:when>
+						<xsl:when test="./OBJ_VALUE/WERTEART = 'Vermögensbewertung C - Mittelwert 500.000 Euro'">500000</xsl:when>
+						<xsl:otherwise>
+							<xsl:if test="./OBJ_VALUE[WERTEART = 'Vermögensbewertung D - Einzelbewertung in Euro']/WERT != ''">
+								<xsl:value-of select="./OBJ_VALUE[WERTEART = 'Vermögensbewertung D - Einzelbewertung in Euro']/WERT" />
+							</xsl:if>
+							<xsl:if test="normalize-space(./OBJ_VALUE[WERTEART = 'Vermögensbewertung D - Einzelbewertung in Euro']/WERT) = ''">
+								<xsl:text>toDo: Bewertung muss aus dem letzten Wert ermittelt werden</xsl:text>									
+							</xsl:if>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:with-param>
 			
 		</xsl:call-template>	
 		

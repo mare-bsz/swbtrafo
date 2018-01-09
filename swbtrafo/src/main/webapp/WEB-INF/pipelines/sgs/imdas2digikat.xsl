@@ -26,6 +26,9 @@
 				</field>
 				<field name="coll">
 					<xsl:choose>
+						<xsl:when test="SAVED_NAMES/OBJEKTAUSWAHL = 'Ausstellung_2017_Messkirch'" >
+							<xsl:text>sgs.messkirch_2017</xsl:text>
+						</xsl:when>
 						<xsl:when test="SAVED_NAMES/OBJEKTAUSWAHL = 'onlinekat-swb-direktlink_2015-Poesie'" >
 							<xsl:text>sgs.poesie2015</xsl:text>
 						</xsl:when>
@@ -105,7 +108,12 @@
 					</xsl:if>
 				</field>
 				<field name="a_entstehungszeit">
-					<xsl:value-of select="./OBJ_SPECIALS/ENTSTEHUNGSZEIT"/>
+					<xsl:if test="./OBJ_SPECIALS/ENTSTEHUNGSZEIT">
+						<xsl:value-of select="./OBJ_SPECIALS/ENTSTEHUNGSZEIT"/>
+					</xsl:if>
+					<xsl:if test="not(./OBJ_SPECIALS/ENTSTEHUNGSZEIT)">
+						<xsl:text>nicht datiert</xsl:text>
+					</xsl:if>				
 				</field>	
 				<field name="a_technik">
 					<xsl:call-template name="seperatedList">

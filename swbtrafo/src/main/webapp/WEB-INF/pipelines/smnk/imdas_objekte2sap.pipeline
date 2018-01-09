@@ -6,7 +6,7 @@
 	<config name="xmlsource" label="Eingabedatei: imdas-pro-XML-Export" typ="file" />
 
 	<pipe className="bsz.swbtrafo.pipes.XmlReaderPipe">
-		<parameter name="records" value="imdasData/object/row" />
+		<parameter name="records" value="OBJECTS/OBJECT" />
 	</pipe>
 		
 	<pipe className="bsz.swbtrafo.pipes.XSLTPipe">

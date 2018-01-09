@@ -42,7 +42,7 @@
 			</schlagwoerter>
     		<weiterImPartnersystemUrl><xsl:text>http://swbexpo.bsz-bw.de/blm/</xsl:text></weiterImPartnersystemUrl>
     		<mediumListe>
-				<xsl:apply-templates select="STOR_LOC[contains(./BILDBEZEICHNUNG,' (Digitaler Katalog')]"  mode="bild">
+				<xsl:apply-templates select="STOR_LOC[contains(./BILDBEZEICHNUNG,'(Digitaler Katalog')]"  mode="bild">
 					<xsl:sort select="./REIHUNG" />
 				</xsl:apply-templates>
 			</mediumListe>
@@ -156,7 +156,8 @@
 	
 	<xsl:template match="PERSON">
 		<autor xmlns="http://www.leo-bw.de/xsd/leobw-1.0.0">
-			<name><xsl:value-of select="./ANZEIGENAME"/></name>
+		  
+				<name><xsl:value-of select="./ANZEIGENAME"/></name>
 			<xsl:if test="./ANZEIGENAME">
 				<typ>DOKUMENT_AUTOR</typ>
 			</xsl:if>
@@ -167,7 +168,63 @@
 					<typ>PND_ID</typ>
 				</externeId>
 			</xsl:if>
+			
 		</autor>
+	</xsl:template>
+	
+	
+			
+
+	
+	<!-- Personen bei Münzen im Element PERSON/NUMISPERSONEN 
+	
+	<xsl:template match="PERSON/NUMISPERSONEN">
+		<autor xmlns="http://www.leo-bw.de/xsd/leobw-1.0.0">
+		   <xsl:choose>
+		    <xsl:when test="./ANZEIGENAME">
+				<name><xsl:value-of select="./ANZEIGENAME"/></name>
+					<xsl:if test="./ANZEIGENAME">
+						<typ>DOKUMENT_AUTOR</typ>
+					</xsl:if>
+			<rolle><xsl:text> [</xsl:text><xsl:value-of select="./ROLLE_FUNKTION"/><xsl:text>]</xsl:text></rolle>
+			<xsl:if test="contains(./NORMTYP,'O-GND')">
+				<externeId>
+					<extId><xsl:value-of select="./LINK"/></extId>
+					<typ>PND_ID</typ>
+				</externeId>
+			</xsl:if>
+			</xsl:when>
+			<xsl:otherwise>
+				<name><xsl:value-of select="./NACHNAME"/></name>
+					<xsl:if test="./NACHNAME">
+						<typ>DOKUMENT_AUTOR</typ>
+					</xsl:if>
+			<rolle><xsl:text> [</xsl:text><xsl:value-of select="./ROLLE_FUNKTION"/><xsl:text>]</xsl:text></rolle>
+			<xsl:if test="contains(./NORMTYP,'O-GND')">
+				<externeId>
+					<extId><xsl:value-of select="./LINK"/></extId>
+					<typ>PND_ID</typ>
+				</externeId>
+			</xsl:if>
+			</xsl:otherwise>
+			</xsl:choose>
+		</autor>
+	</xsl:template>-->
+	
+	<xsl:template match="PERSON/NUMISPERSONEN">
+		<beteiligtePersonWerk xmlns="http://www.leo-bw.de/xsd/leobw-1.0.0">
+			<name><xsl:text>OK</xsl:text><xsl:value-of select="./NUMISPERSONEN/ANZEIGENAME"/></name>
+			<xsl:if test="./NUMISPERSONEN/ANZEIGENAME">
+				<typ>DOKUMENT_AUTOR</typ>
+			</xsl:if>
+			<rolle><xsl:text> [</xsl:text><xsl:value-of select="./ROLLE_FUNKTION"/><xsl:text>]</xsl:text></rolle>
+			<xsl:if test="contains(./NUMISPERSONEN/NORMTYP,'O-GND')">
+				<externeId>
+					<extId><xsl:value-of select="./NUMISPERSONEN/LINK"/></extId>
+					<typ>PND_ID</typ>
+				</externeId>
+			</xsl:if>
+		</beteiligtePersonWerk>
 	</xsl:template>
 	
 	<!-- Weitere Personen im Element PERSON/WEITEREPERSONEN, ggf. mit Normnummer -->

@@ -37,6 +37,7 @@ public class XSLTPipe extends TrafoPipe {
 				}
 			}
 		} catch (Exception e) {
+			//e.printStackTrace();
 			throw new TrafoException(e);
 		} 		
 		super.init();

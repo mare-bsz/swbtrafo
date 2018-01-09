@@ -25,12 +25,16 @@ import nu.xom.Nodes;
 
 public class SolrWriterPipe extends TrafoPipe {		
 		
+		String solrUrl;
 		SolrServer solr;	
 		final List<SolrInputDocument> solrInputDocuments = new ArrayList<SolrInputDocument>();		
 		
 		@Override
-		public void init() throws TrafoException {		
-			solr = new HttpSolrServer(trafoPipeline.getTrafoContext().getInitParameter("solrUrl")+getParameter("shadowCore"));
+		public void init() throws TrafoException {	
+			solrUrl = getParameter("solrUrl") != null ?
+				getParameter("solrUrl") :
+				trafoPipeline.getTrafoContext().getInitParameter("solrUrl");			
+			solr = new HttpSolrServer(solrUrl+getParameter("shadowCore"));
 			try {
 				solr.deleteByQuery("*:*");
 				solr.commit();
@@ -73,7 +77,7 @@ public class SolrWriterPipe extends TrafoPipe {
 					this.solr.add(solrInputDocuments);
 					this.solr.commit();
 				}
-				switchCores(trafoPipeline.getTrafoContext().getInitParameter("solrUrl"), getParameter("liveCore"), getParameter("shadowCore"));
+				switchCores(solrUrl, getParameter("liveCore"), getParameter("shadowCore"));
 			} catch (Exception e) {
 				throw new TrafoException(e);
 			} 			

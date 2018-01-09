@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context displayName="swbtrafo" path="/swbtrafo" allowCasualMultipartParsing="true">	
 	
-	<Parameter name="solrUrl" value="http://localhost:8983/solr/" />
+	<Parameter name="solrUrl" value="http://localhost:8180/solr/" />
 	
 	<Parameter name="mail.smtp.host" value="mailrelay.bsz-bw.de" />
 	
@@ -18,7 +18,7 @@
 		username="swbdepot"/>
 	
 	<Realm className="org.apache.catalina.realm.MemoryRealm"
-       pathname="wtpwebapps/swbtrafo/WEB-INF/users.xml"/>
+       pathname="C:\java\work\swbtrafo\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\swbtrafo\WEB-INF\users.xml"/>
        
      
      

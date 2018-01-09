@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pipeline 
+	name="Erzeugung von imdas-Ladefiles aus SWBdepot für die Staatsgalerie Stuttgart zur Verknüpfung von Medien mit Objekten"
+	description="Für Lieferungen von Bilddateien zwischen einem Anfangs- und einem Enddatum zu einer Sammlung (Kürzel) wird ein Ladefile mit Daten zum Verknüpfen von Medien mit Objekten für den nach Imdas erzeugt. Die Angaben 'erster Datensatz' bzw. 'letzter Datensatz' bezeichnen dabei die Position im Ergebnis (nicht eine Inventarnummer etc.!) und ermöglichen die Ladefiles jeweils in Teilmengen zu generieren und abzuarbeiten.">
+	
+	<config name="aggregation" label="Sammlung zu der die Bilddaten gehören (Kürzel)" typ="text" />
+	<config name="anfangsdatum" label="Anfangsdatum der Lieferungen" typ="datum" />
+	<config name="enddatum" label="Enddatum der Lieferungen" typ="datum" />
+	<config name="von" label="Erster Datensatz der Ausgabe" typ="zahl" />
+	<config name="bis" label="Letzter Datensatz der Ausgabe" typ="zahl" />
+	
+	<parameter name="supplier" value="sgs"/>
+			
+	<pipe className="bsz.swbtrafo.pipes.lzaladefiles.CreateBildladeFilePipe">
+		<parameter name="filename" value="sgs_bildladefile%d.txt" />
+	</pipe>
+
+</pipeline>

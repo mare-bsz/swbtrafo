@@ -6,11 +6,11 @@
 	<config name="xmlsource" label="Eingabedatei: imdas-pro-XML-Export" typ="file" />
 
 	<pipe className="bsz.swbtrafo.pipes.XmlReaderPipe">
-		<parameter name="records" value="imdasData/object/row" />
+		<parameter name="records" value="OBJECTS/OBJECT" />
 	</pipe>
 	
 	<pipe className="bsz.swbtrafo.pipes.XSLTPipe">
-		<parameter name="stylesheet" value="smnk/imdas_kovolute2sap.xsl" />
+		<parameter name="stylesheet" value="smnk/imdas_konvolute2sap.xsl" />
 	</pipe>
 			
 	<pipe className="bsz.swbtrafo.pipes.SAPWriterPipe" >
